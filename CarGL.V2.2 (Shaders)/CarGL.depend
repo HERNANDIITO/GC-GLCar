@@ -1770,3 +1770,13 @@
 1730469304 source:c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\shader.cpp
 	"Shader.h"
 
+1730479360 source:c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\objects.cpp
+	"Objects.h"
+	<GL/glui.h>
+	"load3ds.c"
+
+1730469304 c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\load3ds.c
+	<math.h>
+	<stdio.h>
+	<malloc.h>
+
