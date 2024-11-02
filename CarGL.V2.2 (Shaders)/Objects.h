@@ -30,7 +30,13 @@
 // Identificadores internos de los objetos y el coche
 #define CARRETERA_ID    10
 #define EDIFICIO_ID     20
-
+#define GARAGE_ID       30
+#define WHEAT_ID        40
+#define FENCE_ID        50
+#define ROCK1_ID        60
+#define ROCK2_ID        65
+#define LIGHTPOST_ID    70
+#define TREE_ID         80
 #define COCHE_ID	    500
 
 // IDs para los callbacks de TGui

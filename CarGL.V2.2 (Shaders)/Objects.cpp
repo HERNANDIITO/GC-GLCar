@@ -3,12 +3,12 @@
 
     CarGL (Objects.cpp)
 
-    Grado en Ingeniería Multimedia.
-    Práctica de Gráficos por Computador.
+    Grado en Ingenierï¿½a Multimedia.
+    Prï¿½ctica de Grï¿½ficos por Computador.
     OpenGL con Shaders.
   ---------------------------------------------------------------------------------------
 
-    2012 - 2022 (C) Juan Antonio Puchol García (puchol@dccia.ua.es)
+    2012 - 2022 (C) Juan Antonio Puchol Garcï¿½a (puchol@dccia.ua.es)
 
 
 *****************************************************************************************/
@@ -57,31 +57,111 @@ TPrimitiva::TPrimitiva(int DL, int t)
     sx = sy = sz = 1;
     rx = ry = rz = 0;
 	switch (tipo) {
-		case CARRETERA_ID: {  // Creación de la carretera
+		case CARRETERA_ID: {  // Creaciï¿½n de la carretera
 		    tx = ty = tz = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
 
             //************************ Cargar modelos 3ds ***********************************
-            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../modelos/profe/Road.3ds", &num_vertices0);
             modelo1 = Load3DS("../../modelos/profe/Lines.3ds", &num_vertices1);
 
             break;
 		}
-		case EDIFICIO_ID: {  // Creación de la carretera
+		case EDIFICIO_ID: {  // Creaciï¿½n del edificio
 		    tz = ty = 0;
             tx = -27;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
 
             //************************ Cargar modelos 3ds ***********************************
-            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../modelos/pablo/house.3ds", &num_vertices0);
             modelo1 = NULL;
             break;
 		}
-		case COCHE_ID: { // Creación del coche
+        case GARAGE_ID: {  // Creaciï¿½n del garaje
+		    tz = ty = 0;
+            tx = -27;
+            rx = 270;
+            ry = 90;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/garage.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+        case WHEAT_ID: {  // Creaciï¿½n del trigo
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/wheat.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+        case FENCE_ID: {  // Creaciï¿½n de la valla
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/fence.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case ROCK1_ID: {  // Creaciï¿½n de la roca1
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/rock1.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case ROCK2_ID: {  // Creaciï¿½n de la roca2
+		    ty = 0.25;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/rock2.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case TREE_ID: {  // Creaciï¿½n de la valla
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/tree.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case LIGHTPOST_ID: {  // Creaciï¿½n de la valla
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/lightpost.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case COCHE_ID: { // Creaciï¿½n del coche
 
 		    tx = -2.0;
 		    ty =  0.0;
@@ -91,7 +171,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 		    memcpy(colores, coloresc_c, 8*sizeof(float));
 
             //************************ Cargar modelos 3ds ***********************************
-            // formato 8 floats por vértice (x, y, z, A, B, C, u, v)
+            // formato 8 floats por vï¿½rtice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../modelos/Pablo/car.3ds", &num_vertices0);
             modelo1 = Load3DS("../../modelos/Pablo/wheels.3ds", &num_vertices1);
             break;
@@ -107,23 +187,23 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
         case CARRETERA_ID: {
             if (escena.show_road) {
-                // Cálculo de la ModelView
+                // Cï¿½lculo de la ModelView
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
-                // Envía nuestra ModelView al Vertex Shader
+                // Envï¿½a nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
 
                 // Pintar la carretera
                 glUniform4fv(escena.uColorLocation, 1, colores[0]);
-                //                   Asociamos los vértices y sus normales
+                //                   Asociamos los vï¿½rtices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
 
-                // Pintar las líneas
+                // Pintar las lï¿½neas
                 glUniform4fv(escena.uColorLocation, 1, colores[1]);
-                //                   Asociamos los vértices y sus normales
+                //                   Asociamos los vï¿½rtices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1+3);
 
@@ -135,19 +215,19 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
         } // case CARRETERA_ID:
         case EDIFICIO_ID: {
             if (escena.show_road) {
-                // Cálculo de la ModelView
+                // Cï¿½lculo de la ModelView
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
-                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotación alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
-                // Envía nuestra ModelView al Vertex Shader
+                // Envï¿½a nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
 
                 // Pintar la carretera
                 glUniform4fv(escena.uColorLocation, 1, colores[0]);
-                //                   Asociamos los vértices y sus normales
+                //                   Asociamos los vï¿½rtices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
 
@@ -155,20 +235,184 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             }
             break;
         } // case CARRETERA_ID:
-        case COCHE_ID: {
-            if (escena.show_car) {
-                glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
-                // Asociamos los vértices y sus normales
+        case GARAGE_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
 
-                // Cálculo de la matriz modelo
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case WHEAT_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case FENCE_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case TREE_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case ROCK1_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case ROCK2_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case LIGHTPOST_ID: {
+            if (escena.show_road) {
+                // Cï¿½lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Envï¿½a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        // case CARRETERA_ID:
+        case COCHE_ID: {
+            if (escena.show_car) {
+                glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
+                // Asociamos los vï¿½rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                // Cï¿½lculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix,glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaciï¿½n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaciï¿½n alrededor del eje y en radianes
 
                 modelViewMatrix = escena.viewMatrix * modelMatrix;
 
-                // Envía nuestra ModelView al Vertex Shader
+                // Envï¿½a nuestra ModelView al Vertex Shader
                 glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
@@ -178,11 +422,11 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             if (escena.show_wheels)
             {
                 glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[1]);
-                // Asociamos los vértices y sus normales
+                // Asociamos los vï¿½rtices y sus normales
                 glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1);
                 glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo1+3);
 
-                // RUEDA Delantera Izquierda : Cálculo de la matriz modelo
+                // RUEDA Delantera Izquierda : Cï¿½lculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.95, ty+0.30, tz));
@@ -196,7 +440,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
-                // RUEDA Delantera Derecha : Cálculo de la matriz modelo
+                // RUEDA Delantera Derecha : Cï¿½lculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.95, ty+0.30, tz));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
@@ -208,7 +452,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
-                // RUEDA Trasera Izquierda : Cálculo de la matriz modelo
+                // RUEDA Trasera Izquierda : Cï¿½lculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx+0.95, ty+0.30, tz-2.42));
@@ -222,7 +466,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
                 glDrawArrays(GL_TRIANGLES, 0, num_vertices1);
 
-                // RUEDA Trasera Derecha : Cálculo de la matriz modelo
+                // RUEDA Trasera Derecha : Cï¿½lculo de la matriz modelo
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
                 modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx-0.95, ty+0.30, tz-2.42));
                 modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rr), glm::vec3(1,0,0));
@@ -236,9 +480,8 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
             }
             break;
-        } // case COCHE_ID:
+        }; // case COCHE_ID:
     } // switch
-
 }
 
 //************************************************************** Clase TEscena
@@ -292,7 +535,7 @@ void __fastcall TEscena::InitGL()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    // Inicialización de GLEW
+    // Inicializaciï¿½n de GLEW
     std::cout << "Inicializando GLEW" << std::endl << std::endl;
     if(glewInit() != GLEW_OK)
         throw std::runtime_error("glewInit failed");
@@ -344,7 +587,7 @@ void __fastcall TEscena::InitGL()
     glEnableVertexAttribArray(aPositionLocation);
     glEnableVertexAttribArray(aNormalLocation);
 
-    // Estableciendo la matriz de proyección perspectiva
+    // Estableciendo la matriz de proyecciï¿½n perspectiva
     GLUI_Master.get_viewport_area( &tx, &ty, &tw, &th );
     xy_aspect = (float)tw / (float)th;
     projectionMatrix = glm::perspective(45.0f, xy_aspect, 0.1f, 1000.0f);
@@ -368,7 +611,7 @@ void __fastcall TEscena::AddObject(TPrimitiva *object)
     num_objects++;
 }
 
-/******************** TPrimitiva *TEscena::GetCar(int id) ********************/
+/******************** TPrimitiva *TEscen    garage->rx=180;a::GetCar(int id) ********************/
 
 TPrimitiva __fastcall *TEscena::GetCar(int id)
 {
@@ -415,7 +658,7 @@ void __fastcall TEscena::Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    // Cálculo de la vista (cámara)
+    // Cï¿½lculo de la vista (cï¿½mara)
     viewMatrix      = glm::mat4(1.0f);
     rotateMatrix    = glm::make_mat4(view_rotate);
     viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
@@ -434,7 +677,7 @@ void __fastcall TEscena::Render()
     glutSwapBuffers();
 }
 
-// Selecciona un objeto a través del ratón
+// Selecciona un objeto a travï¿½s del ratï¿½n
 void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 {
 }
@@ -443,10 +686,9 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 void __fastcall TEscena::CrearEscenario()
 {
     TPrimitiva *road = new TPrimitiva(CARRETERA_ID, CARRETERA_ID);
+
     TPrimitiva *car1 = new TPrimitiva(1, COCHE_ID);
     TPrimitiva *car2 = new TPrimitiva(2, COCHE_ID);
-    TPrimitiva *edificio1 = new TPrimitiva(EDIFICIO_ID, EDIFICIO_ID);
-    TPrimitiva *edificio2 = new TPrimitiva(EDIFICIO_ID, EDIFICIO_ID);
 
     car2->colores[0][0] = 0.1;
     car2->colores[0][1] = 0.4;
@@ -455,18 +697,110 @@ void __fastcall TEscena::CrearEscenario()
     car2->tx = 2;
     car2->tz = 3;
 
-    edificio1->colores[0][1]=0.8;
+    TPrimitiva *edificio2 = new TPrimitiva(EDIFICIO_ID, EDIFICIO_ID);
 
-    edificio2->tx=27;
-    edificio2->ry=180;
+    edificio2->tx=8;
+    edificio2->ry=270;
     edificio2->colores[0][2]=0.8;
 
-    // Añadir objetos
+    TPrimitiva *garage = new TPrimitiva(GARAGE_ID, GARAGE_ID);
+
+    garage->tx=8;
+    garage->tz=7;
+    garage->ty=0;
+    garage->colores[0][2]=0.8;
+
+    TPrimitiva *wheat1 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat1->tx = 7;
+    wheat1->ty = 0;
+    wheat1->tz = -4;
+
+    TPrimitiva *wheat2 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat2->tx = 7;
+    wheat2->ty = 0;
+    wheat2->tz = -6;
+
+    TPrimitiva *wheat3 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat3->tx = 7;
+    wheat3->ty = 0;
+    wheat3->tz = -8;
+
+    TPrimitiva *fence1 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence1->tx = 5.75;
+    fence1->ty = 0;
+    fence1->tz = -4.25;
+    fence1->ry = 90;
+
+    TPrimitiva *fence2 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence2->tx = 5.75;
+    fence2->ty = 0;
+    fence2->tz = -7.75;
+    fence2->ry = 90;
+
+    TPrimitiva *fence3 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence3->tx = 5.75;
+    fence3->ty = 0;
+    fence3->tz = -11;
+    fence3->ry = 90;
+
+    TPrimitiva *rock1 = new TPrimitiva(ROCK1_ID, ROCK1_ID);
+
+    rock1->tx = -5;
+    rock1->tz = 1;
+
+    TPrimitiva *rock2 = new TPrimitiva(ROCK2_ID, ROCK2_ID);
+
+    rock2->tx = -5;
+    rock2->tz = 1.5;
+    rock2->rx = 45;
+
+    TPrimitiva *tree = new TPrimitiva(TREE_ID, TREE_ID);
+
+    tree->tx = -5.5;
+    tree->tz = 2;
+
+    TPrimitiva *lightpost = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost->tx = -5;
+    lightpost->tz = 6;
+    lightpost->ry = 90;
+
+    TPrimitiva *lightpost2 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost2->tx = 5;
+    lightpost2->tz = -6;
+    lightpost2->ry = -90;
+
+    // Aï¿½adir objetos
     AddObject(road);
-    AddObject(edificio1);
+
     AddObject(edificio2);
 
-    // Añadir coches
+    AddObject(garage);
+
+    AddObject(wheat1);
+    AddObject(wheat2);
+    AddObject(wheat3);
+
+    AddObject(fence1);
+    AddObject(fence2);
+    AddObject(fence3);
+
+    AddObject(rock1);
+    AddObject(rock2);
+
+    AddObject(tree);
+
+    AddObject(lightpost);
+    AddObject(lightpost2);
+
+    // Aï¿½adir coches
     AddCar(car1);
     AddCar(car2);
 }
@@ -493,7 +827,7 @@ void controlCallback(int control)
 void __fastcall TGui::Init(int main_window) {
 
     /****************************************************/
-    /*        Código con el interfaz Gráfico GLUI       */
+    /*        Cï¿½digo con el interfaz Grï¿½fico GLUI       */
     /****************************************************/
     printf( "GLUI version: %3.2f\n", GLUI_Master.get_version() );
 
@@ -502,10 +836,10 @@ void __fastcall TGui::Init(int main_window) {
     /*** Crea a ventana lateral ***/
     glui = GLUI_Master.create_glui_subwindow( window_id, GLUI_SUBWINDOW_RIGHT );
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
-    // Añade un panel con texto con el valor de la selección
+    // Aï¿½ade un panel con texto con el valor de la selecciï¿½n
     GLUI_Panel *panel0 = new GLUI_Panel(glui, "Seleccion");
     GLUI_RadioGroup *radioGroup = new GLUI_RadioGroup(panel0, &sel, SEL_ID, controlCallback);
     glui->add_radiobutton_to_group(radioGroup, "NINGUNO");
@@ -515,7 +849,7 @@ void __fastcall TGui::Init(int main_window) {
     glui->add_radiobutton_to_group(radioGroup, "COCHE 2");
 
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     obj_panel = new GLUI_Rollout(glui, "Propiedades", true );
@@ -527,9 +861,9 @@ void __fastcall TGui::Init(int main_window) {
     new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, 1, controlCallback );
     new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, 1, controlCallback );
 
-    /******** Añade controles para las luces ********/
+    /******** Aï¿½ade controles para las luces ********/
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     GLUI_Rollout *roll_lights = new GLUI_Rollout(glui, "Luces", true );
@@ -567,7 +901,7 @@ void __fastcall TGui::Init(int main_window) {
     sb->set_float_limits(-100,100);
 
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     /***  Rollout de Opciones ***/
@@ -578,30 +912,30 @@ void __fastcall TGui::Init(int main_window) {
 
 
     /*** Disable/Enable botones ***/
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
     new GLUI_Checkbox( glui, "Permitir Movimiento", &enable_panel2 );
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
     new GLUI_Button( glui, "Resetear Posicion", RESET_ID, controlCallback );
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     new GLUI_Separator( glui );
 
-     // Añade una separación
+     // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     new GLUI_StaticText( glui, "  Autor:" );
     new GLUI_StaticText( glui, "  2012-2022 (C) Juan Antonio Puchol  " );
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     new GLUI_Separator( glui );
 
-    // Añade una separación
+    // Aï¿½ade una separaciï¿½n
     new GLUI_StaticText( glui, "" );
 
     /****** A 'quit' button *****/
@@ -724,7 +1058,7 @@ void __fastcall TGui::Reshape( int xx, int yy )
     GLUI_Master.get_viewport_area( &x, &y, &ancho, &alto );
     glViewport( x, y, ancho, alto );
 
-    // !!!!! ATENCIÓN: comprobar que alto no sea 0, sino división por 0 !!!!!!
+    // !!!!! ATENCIï¿½N: comprobar que alto no sea 0, sino divisiï¿½n por 0 !!!!!!
     escena.xy_aspect = (float)ancho / (float)alto;
     escena.projectionMatrix = glm::perspective(45.0f, escena.xy_aspect, 0.1f, 1000.0f);
     glUniformMatrix4fv(escena.uProjectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(escena.projectionMatrix));
