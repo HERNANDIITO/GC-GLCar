@@ -258,6 +258,21 @@ TPrimitiva::TPrimitiva(int DL, int t)
             modelo1 = NULL;
             break;
 		}
+		case BUSH_ID: {  // Creaci�n de la arbusto
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.13;
+            colores[0][1] = 0.40;
+            colores[0][2] = 0.18;
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/bush.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
 		case COCHE_ID: { // Creaci�n del coche
 
 		    tx = -2.0;
@@ -380,6 +395,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
         }
         case GRASS_ID: {
             if (escena.show_road) {
+                tz = tx = 0;
                 // C�lculo de la ModelView
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
 
@@ -586,6 +602,29 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             break;
         }
         case LOG2_ID: {
+            if (escena.show_road) {
+                // C�lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaci�n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaci�n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Env�a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los v�rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case BUSH_ID: {
             if (escena.show_road) {
                 // C�lculo de la ModelView
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
@@ -1227,12 +1266,27 @@ void __fastcall TEscena::CrearEscenario()
     TPrimitiva *log2 = new TPrimitiva(LOG2_ID, LOG2_ID);
 
     log2->tx = 23.75;
-    log2->tz = 20.75;
+    log2->tz = 35.75;
     log2->ry = 55;
 
     TPrimitiva *grass = new TPrimitiva(GRASS_ID, GRASS_ID);
     grass->ty = -0.30;
-    
+
+    TPrimitiva *bush1 = new TPrimitiva(BUSH_ID, BUSH_ID);
+    bush1->tx = 15;
+    bush1->tz = 17;
+    bush1->ry = 30;
+
+    TPrimitiva *bush2 = new TPrimitiva(BUSH_ID, BUSH_ID);
+    bush2->tx = 16;
+    bush2->tz = 30;
+    bush2->ry = 45;
+
+    TPrimitiva *bush3 = new TPrimitiva(BUSH_ID, BUSH_ID);
+    bush3->tx = 27;
+    bush3->tz = 28;
+    bush3->ry = 0;
+
     // A�adir objetos
     AddObject(road);
 
@@ -1303,6 +1357,10 @@ void __fastcall TEscena::CrearEscenario()
     AddObject(mountain3);
 
     AddObject(grass);
+
+    AddObject(bush1);
+    AddObject(bush2);
+    AddObject(bush3);
 
     // A�adir coches
     AddCar(car1);

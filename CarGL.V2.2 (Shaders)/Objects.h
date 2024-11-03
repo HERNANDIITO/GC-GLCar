@@ -42,6 +42,7 @@
 #define LOG1_ID         100
 #define LOG2_ID         105
 #define GRASS_ID        110
+#define BUSH_ID         120
 #define COCHE_ID	    500
 
 // IDs para los callbacks de TGui
