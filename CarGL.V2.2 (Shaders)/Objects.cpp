@@ -64,9 +64,7 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
-            modelo0 = Load3DS("../../modelos/profe/Road.3ds", &num_vertices0);
-            modelo1 = Load3DS("../../modelos/profe/Lines.3ds", &num_vertices1);
-
+            modelo0 = Load3DS("../../modelos/pablo/road.3ds", &num_vertices0);
             break;
 		}
 		case EDIFICIO_ID: {  // Creaci�n del edificio
@@ -100,9 +98,28 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
 
+            colores[0][0] = 1;
+            colores[0][1] = 0.85;
+            colores[0][2] = 0.45;
+
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../modelos/pablo/wheat.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+        case GRASS_ID: {  // Creaci�n del trigo
+		    ty = -0.1;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.45;
+            colores[0][1] = 0.70;
+            colores[0][2] = 0.14;
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/grass.3ds", &num_vertices0);
             modelo1 = NULL;
             break;
 		}
@@ -110,6 +127,11 @@ TPrimitiva::TPrimitiva(int DL, int t)
 		    tz = ty = 0;
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 1;
+            colores[0][1] = 1;
+            colores[0][2] = 1;
+            colores[0][3] = 1;
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
@@ -119,8 +141,12 @@ TPrimitiva::TPrimitiva(int DL, int t)
 		}
 		case ROCK1_ID: {  // Creaci�n de la roca1
 		    tz = ty = 0;
-
             memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.53;
+            colores[0][1] = 0.51;
+            colores[0][2] = 0.52;
+
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
@@ -130,8 +156,12 @@ TPrimitiva::TPrimitiva(int DL, int t)
 		}
 		case ROCK2_ID: {  // Creaci�n de la roca2
 		    ty = 0.25;
-
             memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.53;
+            colores[0][1] = 0.51;
+            colores[0][2] = 0.52;
+
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
@@ -141,8 +171,11 @@ TPrimitiva::TPrimitiva(int DL, int t)
 		}
 		case TREE_ID: {  // Creaci�n de la valla
 		    tz = ty = 0;
-
             memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.13;
+            colores[0][1] = 0.40;
+            colores[0][2] = 0.18;
 
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
@@ -155,9 +188,73 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
             memcpy(colores, coloresr_c, 8*sizeof(float));
 
+            colores[0][0] = 0.40;
+            colores[0][1] = 0.26;
+            colores[0][2] = 0.15;
+
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../modelos/pablo/lightpost.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case MOUNTAIN1_ID: {  // Creaci�n de la montaña1
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.53;
+            colores[0][1] = 0.51;
+            colores[0][2] = 0.52;
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/mountain1.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case MOUNTAIN2_ID: {  // Creaci�n de la montaña2
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.53;
+            colores[0][1] = 0.51;
+            colores[0][2] = 0.52;
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/mountain2.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case LOG1_ID: {  // Creaci�n de la montaña2
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.25;
+            colores[0][1] = 0.15;
+            colores[0][2] = 0.08;
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/log1.3ds", &num_vertices0);
+            modelo1 = NULL;
+            break;
+		}
+		case LOG2_ID: {  // Creaci�n de la montaña2
+		    tz = ty = 0;
+
+            memcpy(colores, coloresr_c, 8*sizeof(float));
+
+            colores[0][0] = 0.25;
+            colores[0][1] = 0.15;
+            colores[0][2] = 0.08;
+
+            //************************ Cargar modelos 3ds ***********************************
+            // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
+            modelo0 = Load3DS("../../modelos/pablo/log2.3ds", &num_vertices0);
             modelo1 = NULL;
             break;
 		}
@@ -281,6 +378,29 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             }
             break;
         }
+        case GRASS_ID: {
+            if (escena.show_road) {
+                // C�lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaci�n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaci�n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Env�a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los v�rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
         case FENCE_ID: {
             if (escena.show_road) {
                 // C�lculo de la ModelView
@@ -374,6 +494,98 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             break;
         }
         case LIGHTPOST_ID: {
+            if (escena.show_road) {
+                // C�lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaci�n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaci�n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Env�a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los v�rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case MOUNTAIN1_ID: {
+            if (escena.show_road) {
+                // C�lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaci�n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaci�n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Env�a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los v�rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case MOUNTAIN2_ID: {
+            if (escena.show_road) {
+                // C�lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaci�n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaci�n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Env�a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los v�rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case LOG1_ID: {
+            if (escena.show_road) {
+                // C�lculo de la ModelView
+                modelMatrix     = glm::mat4(1.0f); // matriz identidad
+
+                modelMatrix     = glm::translate(modelMatrix, glm::vec3(tx, ty, tz));
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(ry), glm::vec3(0,1,0)); // rotaci�n alrededor del eje y en radianes
+                modelMatrix     = glm::rotate(modelMatrix, (float) glm::radians(rx), glm::vec3(1,0,0)); // rotaci�n alrededor del eje y en radianes
+
+                modelViewMatrix = escena.viewMatrix * modelMatrix;
+                // Env�a nuestra ModelView al Vertex Shader
+                glUniformMatrix4fv(escena.uMVMatrixLocation, 1, GL_FALSE, &modelViewMatrix[0][0]);
+
+                // Pintar la carretera
+                glUniform4fv(escena.uColorLocation, 1, colores[0]);
+                //                   Asociamos los v�rtices y sus normales
+                glVertexAttribPointer(escena.aPositionLocation, POSITION_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0);
+                glVertexAttribPointer(escena.aNormalLocation, NORMAL_COMPONENT_COUNT, GL_FLOAT, false, STRIDE, modelo0+3);
+
+                glDrawArrays(GL_TRIANGLES, 0, num_vertices0);
+            }
+            break;
+        }
+        case LOG2_ID: {
             if (escena.show_road) {
                 // C�lculo de la ModelView
                 modelMatrix     = glm::mat4(1.0f); // matriz identidad
@@ -705,7 +917,7 @@ void __fastcall TEscena::CrearEscenario()
 
     TPrimitiva *garage = new TPrimitiva(GARAGE_ID, GARAGE_ID);
 
-    garage->tx=8;
+    garage->tx=10;
     garage->tz=7;
     garage->ty=0;
     garage->colores[0][2]=0.8;
@@ -728,6 +940,78 @@ void __fastcall TEscena::CrearEscenario()
     wheat3->ty = 0;
     wheat3->tz = -8;
 
+    TPrimitiva *wheat4 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat4->tx = 7;
+    wheat4->ty = 0;
+    wheat4->tz = -10;
+
+    TPrimitiva *wheat5 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat5->tx = 7;
+    wheat5->ty = 0;
+    wheat5->tz = -11;
+
+    TPrimitiva *wheat6 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat6->tx = 9.25;
+    wheat6->ty = 0;
+    wheat6->tz = -4;
+
+    TPrimitiva *wheat7 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat7->tx = 9.25;
+    wheat7->ty = 0;
+    wheat7->tz = -6;
+
+    TPrimitiva *wheat8 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat8->tx = 9.25;
+    wheat8->ty = 0;
+    wheat8->tz = -8;
+
+    TPrimitiva *wheat9 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat9->tx = 9.25;
+    wheat9->ty = 0;
+    wheat9->tz = -10;
+
+    TPrimitiva *wheat10 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat10->tx = 9.25;
+    wheat10->ty = 0;
+    wheat10->tz = -11;
+
+    TPrimitiva *wheat11 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat11->tx = 11.5;
+    wheat11->ty = 0;
+    wheat11->tz = -4;
+
+    TPrimitiva *wheat12 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat12->tx = 11.5;
+    wheat12->ty = 0;
+    wheat12->tz = -6;
+
+    TPrimitiva *wheat13 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat13->tx = 11.5;
+    wheat13->ty = 0;
+    wheat13->tz = -8;
+
+    TPrimitiva *wheat14 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat14->tx = 11.5;
+    wheat14->ty = 0;
+    wheat14->tz = -10;
+
+    TPrimitiva *wheat15 = new TPrimitiva(WHEAT_ID, WHEAT_ID);
+
+    wheat15->tx = 11.5;
+    wheat15->ty = 0;
+    wheat15->tz = -11;
+
     TPrimitiva *fence1 = new TPrimitiva(FENCE_ID, FENCE_ID);
 
     fence1->tx = 5.75;
@@ -749,15 +1033,64 @@ void __fastcall TEscena::CrearEscenario()
     fence3->tz = -11;
     fence3->ry = 90;
 
+    TPrimitiva *fence4 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence4->tx = 7.25+(3.5*0);
+    fence4->ty = 0;
+    fence4->tz = -12.5;
+    fence4->ry = 180;
+
+    TPrimitiva *fence5 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence5->tx = 7.25+(3.5*1);
+    fence5->ty = 0;
+    fence5->tz = -12.5;
+    fence5->ry = 180;
+
+    TPrimitiva *fence6 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence6->tx = 5.75+(3.5*2);
+    fence6->ty = 0;
+    fence6->tz = -4.25;
+    fence6->ry = 90;
+
+    TPrimitiva *fence7 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence7->tx = 5.75+(3.5*2);
+    fence7->ty = 0;
+    fence7->tz = -7.75;
+    fence7->ry = 90;
+
+    TPrimitiva *fence8 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence8->tx = 5.75+(3.5*2);
+    fence8->ty = 0;
+    fence8->tz = -11;
+    fence8->ry = 90;
+
+    TPrimitiva *fence9 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence9->tx = 7.25+3.5;
+    fence9->ty = 0;
+    fence9->tz = -2.5;
+    fence9->ry = 180;
+
+    TPrimitiva *fence10 = new TPrimitiva(FENCE_ID, FENCE_ID);
+
+    fence10->tx = 7.25;
+    fence10->ty = 0;
+    fence10->tz = -2.5;
+    fence10->ry = 180;
+
     TPrimitiva *rock1 = new TPrimitiva(ROCK1_ID, ROCK1_ID);
 
-    rock1->tx = -5;
-    rock1->tz = 1;
+    rock1->tx = -7;
+    rock1->tz = 2.5;
 
     TPrimitiva *rock2 = new TPrimitiva(ROCK2_ID, ROCK2_ID);
 
-    rock2->tx = -5;
-    rock2->tz = 1.5;
+    rock2->tx = -6;
+    rock2->tz = 3;
     rock2->rx = 45;
 
     TPrimitiva *tree = new TPrimitiva(TREE_ID, TREE_ID);
@@ -765,18 +1098,141 @@ void __fastcall TEscena::CrearEscenario()
     tree->tx = -5.5;
     tree->tz = 2;
 
-    TPrimitiva *lightpost = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+    TPrimitiva *lightpost_drch_1 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
 
-    lightpost->tx = -5;
-    lightpost->tz = 6;
-    lightpost->ry = 90;
+    lightpost_drch_1->tx = -6.5;
+    lightpost_drch_1->tz = -6;
+    lightpost_drch_1->ry = 90;
 
-    TPrimitiva *lightpost2 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+    TPrimitiva *lightpost_izq_1 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
 
-    lightpost2->tx = 5;
-    lightpost2->tz = -6;
-    lightpost2->ry = -90;
+    lightpost_izq_1->tx = 5;
+    lightpost_izq_1->tz = -3;
+    lightpost_izq_1->ry = -90;
 
+    TPrimitiva *lightpost_drch_2 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_drch_2->tx = -6.5;
+    lightpost_drch_2->tz = -6+(12*1);
+    lightpost_drch_2->ry = 90;
+
+    TPrimitiva *lightpost_izq_2 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_izq_2->tx = 5;
+    lightpost_izq_2->tz = -3+(12*1);
+    lightpost_izq_2->ry = -90;
+
+    TPrimitiva *lightpost_drch_3 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_drch_3->tx = -6.5;
+    lightpost_drch_3->tz = -6+(12*2);
+    lightpost_drch_3->ry = 90;
+
+    TPrimitiva *lightpost_izq_3 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_izq_3->tx = 5;
+    lightpost_izq_3->tz = -3+(12*2);
+    lightpost_izq_3->ry = -90;
+
+    TPrimitiva *lightpost_drch_4 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_drch_4->tx = -6.5;
+    lightpost_drch_4->tz = -6+(12*3);
+    lightpost_drch_4->ry = 90;
+
+    TPrimitiva *lightpost_izq_4 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_izq_4->tx = 5;
+    lightpost_izq_4->tz = -3+(12*3);
+    lightpost_izq_4->ry = -90;
+
+    TPrimitiva *lightpost_drch_5 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_drch_5->tx = -6.5;
+    lightpost_drch_5->tz = -6+(12*4);
+    lightpost_drch_5->ry = 90;
+
+    TPrimitiva *lightpost_izq_5 = new TPrimitiva(LIGHTPOST_ID, LIGHTPOST_ID);
+
+    lightpost_izq_5->tx = 5;
+    lightpost_izq_5->tz = -3+(12*4);
+    lightpost_izq_5->ry = -90;
+
+    TPrimitiva *mountain1 = new TPrimitiva(MOUNTAIN1_ID, MOUNTAIN1_ID);
+
+    mountain1->tx = 25;
+    mountain1->tz = 0;
+
+    TPrimitiva *mountain2 = new TPrimitiva(MOUNTAIN2_ID, MOUNTAIN2_ID);
+
+    mountain2->tx = 30;
+    mountain2->tz = 10;
+
+    TPrimitiva *mountain3 = new TPrimitiva(MOUNTAIN2_ID, MOUNTAIN2_ID);
+
+    mountain3->tx = 45;
+    mountain3->tz = 30;
+    mountain3->ry = 47;
+
+
+    TPrimitiva *tree2 = new TPrimitiva(TREE_ID, TREE_ID);
+
+    tree2->tx = 24;
+    tree2->tz = 11;
+
+    TPrimitiva *tree3 = new TPrimitiva(TREE_ID, TREE_ID);
+
+    tree3->tx = 20;
+    tree3->tz = 8;
+
+    TPrimitiva *tree4 = new TPrimitiva(TREE_ID, TREE_ID);
+
+    tree4->tx = 20;
+    tree4->tz = 18;
+
+    TPrimitiva *tree5 = new TPrimitiva(TREE_ID, TREE_ID);
+
+    tree5->tx = 15;
+    tree5->tz = 12.5;
+
+    TPrimitiva *rock3 = new TPrimitiva(ROCK1_ID, ROCK1_ID);
+
+    rock3->tx = 21;
+    rock3->tz = 8.5;
+
+    TPrimitiva *rock4 = new TPrimitiva(ROCK2_ID, ROCK2_ID);
+
+    rock4->tx = 22;
+    rock4->tz = 9;
+    rock4->rx = 45;
+
+    TPrimitiva *rock6 = new TPrimitiva(ROCK1_ID, ROCK1_ID);
+
+    rock6->tx = 15.6;
+    rock6->tz = 13.25;
+    rock6->ry = 76;
+
+    TPrimitiva *rock5 = new TPrimitiva(ROCK2_ID, ROCK2_ID);
+
+    rock5->tx = 20.75;
+    rock5->tz = 18.75;
+    rock5->rx = 45;
+
+    TPrimitiva *log1 = new TPrimitiva(LOG1_ID, LOG1_ID);
+
+    log1->tx = 22.75;
+    log1->tz = 24.75;
+    log1->ry = 23;
+
+    TPrimitiva *log2 = new TPrimitiva(LOG2_ID, LOG2_ID);
+
+    log2->tx = 23.75;
+    log2->tz = 20.75;
+    log2->ry = 55;
+
+    TPrimitiva *grass = new TPrimitiva(GRASS_ID, GRASS_ID);
+    grass->ty = -0.30;
+    
     // A�adir objetos
     AddObject(road);
 
@@ -787,18 +1243,66 @@ void __fastcall TEscena::CrearEscenario()
     AddObject(wheat1);
     AddObject(wheat2);
     AddObject(wheat3);
+    AddObject(wheat4);
+    AddObject(wheat5);
+
+    AddObject(wheat6);
+    AddObject(wheat7);
+    AddObject(wheat8);
+    AddObject(wheat9);
+    AddObject(wheat10);
+
+    AddObject(wheat11);
+    AddObject(wheat12);
+    AddObject(wheat13);
+    AddObject(wheat14);
+    AddObject(wheat15);
 
     AddObject(fence1);
     AddObject(fence2);
     AddObject(fence3);
+    AddObject(fence4);
+
+    AddObject(fence5);
+    AddObject(fence6);
+
+    AddObject(fence7);
+    AddObject(fence8);
+    AddObject(fence9);
+    AddObject(fence10);
 
     AddObject(rock1);
     AddObject(rock2);
 
-    AddObject(tree);
+    AddObject(rock3);
+    AddObject(rock4);
+    AddObject(rock5);
+    AddObject(rock6);
 
-    AddObject(lightpost);
-    AddObject(lightpost2);
+    AddObject(tree);
+    AddObject(tree2);
+    AddObject(tree3);
+    AddObject(tree4);
+    AddObject(tree5);
+
+    AddObject(log1);
+    AddObject(log2);
+
+    AddObject(lightpost_drch_1);
+    AddObject(lightpost_izq_1);
+    AddObject(lightpost_drch_2);
+    AddObject(lightpost_izq_2);
+    AddObject(lightpost_drch_3);
+    AddObject(lightpost_izq_3);
+    AddObject(lightpost_drch_4);
+    AddObject(lightpost_izq_4);
+    AddObject(lightpost_drch_5);
+
+    AddObject(mountain1);
+    AddObject(mountain2);
+    AddObject(mountain3);
+
+    AddObject(grass);
 
     // A�adir coches
     AddCar(car1);

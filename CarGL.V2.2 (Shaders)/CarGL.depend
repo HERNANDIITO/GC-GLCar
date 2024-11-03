@@ -1745,7 +1745,7 @@
 	"Objects.h"
 	<GL\glui.h>
 
-1730568707 c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\objects.h
+1730636469 c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\objects.h
 	"Shader.h"
 	"Program.h"
 	<GL/glui.h>
@@ -1770,7 +1770,7 @@
 1730469304 source:c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\shader.cpp
 	"Shader.h"
 
-1730570982 source:c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\objects.cpp
+1730639557 source:c:\universidad\gc\gc-glcar\cargl.v2.2 (shaders)\objects.cpp
 	"Objects.h"
 	<GL/glui.h>
 	"load3ds.c"

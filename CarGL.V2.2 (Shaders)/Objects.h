@@ -3,12 +3,12 @@
 
     CarGL (Objects.h)
 
-    Grado en Ingeniería Multimedia.
-    Práctica de Gráficos por Computador.
+    Grado en Ingenierï¿½a Multimedia.
+    Prï¿½ctica de Grï¿½ficos por Computador.
     OpenGL con Shaders.
   --------------------------------------------------------------------------------------
 
-    2012 - 2022 (C) Juan Antonio Puchol García (puchol@dccia.ua.es)
+    2012 - 2022 (C) Juan Antonio Puchol Garcï¿½a (puchol@dccia.ua.es)
 
 ****************************************************************************************/
 
@@ -33,10 +33,15 @@
 #define GARAGE_ID       30
 #define WHEAT_ID        40
 #define FENCE_ID        50
+#define LIGHTPOST_ID    70
 #define ROCK1_ID        60
 #define ROCK2_ID        65
-#define LIGHTPOST_ID    70
 #define TREE_ID         80
+#define MOUNTAIN1_ID    90
+#define MOUNTAIN2_ID    95
+#define LOG1_ID         100
+#define LOG2_ID         105
+#define GRASS_ID        110
 #define COCHE_ID	    500
 
 // IDs para los callbacks de TGui
@@ -59,7 +64,7 @@
 #define POSITION_COMPONENT_COUNT    3
 #define NORMAL_COMPONENT_COUNT      3
 #define UV_COMPONENT_COUNT          2
-// Cálculo del stride (3+3+2)*4 = 8*4 = 32
+// Cï¿½lculo del stride (3+3+2)*4 = 8*4 = 32
 #define STRIDE                      32
 
 // Nombre de los attributes
@@ -80,19 +85,19 @@ class TPrimitiva
 public: // Atributos de la clase
 		int ID;				    // DisplayLists del objeto
 		int tipo;               // Tipo de Objeto
-		float tx,ty,tz; 	    // Posición del objeto
+		float tx,ty,tz; 	    // Posiciï¿½n del objeto
 		float sx,sy,sz; 	    // Escalado del objeto
-		float rx,ry,rz;     	// Rotación del objeto
-		float rr;               // Rotación de las ruedas
+		float rx,ry,rz;     	// Rotaciï¿½n del objeto
+		float rr;               // Rotaciï¿½n de las ruedas
 		float colores[2][4];    // Color RGB y canal Alfa
 
 		float   *modelo0;        // modelo a representar
-		int     num_vertices0;   // número de vértices
+		int     num_vertices0;   // nï¿½mero de vï¿½rtices
 
         float   *modelo1;        // modelo a representar
-		int     num_vertices1;   // número de vértices
+		int     num_vertices1;   // nï¿½mero de vï¿½rtices
 
-public: // Métodos
+public: // Mï¿½todos
  		TPrimitiva(int DL, int tipo);
         void __fastcall Render(int seleccion, bool reflejo=false);
 };
@@ -103,8 +108,8 @@ class TEscena
 {
 public: // Atributos de la clase
 		int   	seleccion;   	// Objeto seleccionado, 0=ninguno
-        int		num_objects;    // Número de objetos (excepto coches)
-        int     num_cars;       // Número de coches
+        int		num_objects;    // Nï¿½mero de objetos (excepto coches)
+        int     num_cars;       // Nï¿½mero de coches
 
         TPrimitiva  *cars[10];
         TPrimitiva  *objects[100];
@@ -118,8 +123,8 @@ public: // Atributos de la clase
 		int uColorLocation;
 		int uLuz0Location;
 
-		glm::mat4 projectionMatrix; // Almacena la matriz de proyección
-        glm::mat4 viewMatrix;       // Almacena la matriz de la vista (cámara)
+		glm::mat4 projectionMatrix; // Almacena la matriz de proyecciï¿½n
+        glm::mat4 viewMatrix;       // Almacena la matriz de la vista (cï¿½mara)
 
 		Program  *shaderProgram;    // Almacena el programa de OpenGL (ShaderProgram)
 
@@ -155,7 +160,7 @@ public: // Atributos de la clase
         GLfloat view_rotate[16];
         float   scale;
 
-public: // Métodos
+public: // Mï¿½todos
 		TEscena();
 
         void __fastcall InitGL();
