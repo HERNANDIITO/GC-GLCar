@@ -3,40 +3,40 @@
 
     CarGL (main.cpp)
 
-    Grado en Ingeniería Multimedia.
-    Práctica de Gráficos por Computador.
+    Grado en Ingenierï¿½a Multimedia.
+    Prï¿½ctica de Grï¿½ficos por Computador.
     OpenGL con Shaders.
   ------------------------------------------------------------------------------------------
 
-    CarsGL, 2012 - 2022 (C) Juan Antonio Puchol García (puchol@dccia.ua.es)
+    CarsGL, 2012 - 2022 (C) Juan Antonio Puchol Garcï¿½a (puchol@dccia.ua.es)
 
     Changelog:
 
-    Versión 1.0 (Noviembre 2012)
-        - Versión inicial para Code::Blocks 10.05
+    Versiï¿½n 1.0 (Noviembre 2012)
+        - Versiï¿½n inicial para Code::Blocks 10.05
 
-    Versión 1.1 (Noviembre 2012)
-        - Arreglado el bug de selección incorrecta debido al panel inferior de controles
+    Versiï¿½n 1.1 (Noviembre 2012)
+        - Arreglado el bug de selecciï¿½n incorrecta debido al panel inferior de controles
 
-    Versión 1.2 (Octubre 2013 )
-        - Adaptación de la librería GLUI a Code::Blocks 12.11 y 13.12
+    Versiï¿½n 1.2 (Octubre 2013 )
+        - Adaptaciï¿½n de la librerï¿½a GLUI a Code::Blocks 12.11 y 13.12
 
-    Versión 1.3 (Octubre 2014 )
-        - Adaptación de la librería GLUI a Code::Blocks 13.12
+    Versiï¿½n 1.3 (Octubre 2014 )
+        - Adaptaciï¿½n de la librerï¿½a GLUI a Code::Blocks 13.12
 
-    Versión 2.0 (Octubre 2015 )
-        - Adaptación del código empleando Shaders (Modern OpenGL Graphics)
+    Versiï¿½n 2.0 (Octubre 2015 )
+        - Adaptaciï¿½n del cï¿½digo empleando Shaders (Modern OpenGL Graphics)
 
-    Versión 2.1 (Septiembre 2016 )
-        - Modificación de los scrollbars de las luces para manipular la posisión (compatible con Code::Blocks 16.01)
+    Versiï¿½n 2.1 (Septiembre 2016 )
+        - Modificaciï¿½n de los scrollbars de las luces para manipular la posisiï¿½n (compatible con Code::Blocks 16.01)
 
-    Versión 2.2 (Octubre 2022 )
-        - Corrección de pequeños bugs
-        - Añadidos dos edificios de ejemplo (método TEscena::CrearEscena)
+    Versiï¿½n 2.2 (Octubre 2022 )
+        - Correcciï¿½n de pequeï¿½os bugs
+        - Aï¿½adidos dos edificios de ejemplo (mï¿½todo TEscena::CrearEscena)
 
     ----------------------------------------------------------------------------------------------------------------
 
-    NOTA:   Para que esta aplicación compile correctamente se necesita tener copiados los
+    NOTA:   Para que esta aplicaciï¿½n compile correctamente se necesita tener copiados los
             siguientes archivos desde la carpeta "Para Copiar":
 
             glut32.dll  -> C:\Windows\system
@@ -68,12 +68,12 @@
             glm         -> C:\Program Files (x86)\CodeBlocks\MinGW\include
 
 
-            ACLARACIÓN:
-                Hay varias librerías libglui32.a en la carpeta "otros"
+            ACLARACIï¿½N:
+                Hay varias librerï¿½as libglui32.a en la carpeta "otros"
                 - Renombrar libglui32.10.05.a a libglui32.a para usar Code::Blocks 10.05
                 - Renombrar libglui32.12.11.a a libglui32.a para usar Code::Blocks 12.11
                 - Renombrar libglui32.13.12.a a libglui32.a para usar Code::Blocks 13.12 a 17.12
-                - De momento no funciona con la versión Code::Blocks 20.03
+                - De momento no funciona con la versiï¿½n Code::Blocks 20.03
 
 ****************************************************************************************************/
 
@@ -108,11 +108,19 @@ static void SpecialKey(int key, int x, int y)
     {
         case GLUT_KEY_UP:   // El coche avanza
             car->rr+=8;
-            car->tz += 0.05;
+            car->tz += 0.05 * cos(glm::radians(car->gc)) ;
+            car->tx += 0.05 * sin(glm::radians(car->gc)) ;
             break;
         case GLUT_KEY_DOWN:   // El coche retrocede
             car->rr-=8;
-            car->tz -= 0.05;
+            car->tz -= 0.05 * cos(glm::radians(car->gc)) ;
+            car->tx -= 0.05 * sin(glm::radians(car->gc)) ;
+            break;
+        case GLUT_KEY_LEFT:   // El coche gira a la izquierda
+            car->gc+=8;
+            break;
+        case GLUT_KEY_RIGHT:   // El coche gira a la derecha
+            car->gc-=8;
             break;
     }
 
@@ -161,7 +169,7 @@ int main(int argc, char* argv[])
 
     int main_window = glutCreateWindow( "CarGL V2.2 (2022) con Shaders" );
 
-    // Inicializa los valores de OpenGL para esta Aplicación
+    // Inicializa los valores de OpenGL para esta Aplicaciï¿½n
     escena.InitGL();
     gui.Init(main_window);
 
