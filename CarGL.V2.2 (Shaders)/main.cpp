@@ -118,9 +118,21 @@ static void SpecialKey(int key, int x, int y)
             break;
         case GLUT_KEY_LEFT:   // El coche gira a la izquierda
             car->gc+=8;
+            if ( car->gr < 35 ) {
+                if ( car->gr < 0 ) {
+                    car->gr = 0;
+                }
+                car->gr+=8;
+            }
             break;
         case GLUT_KEY_RIGHT:   // El coche gira a la derecha
             car->gc-=8;
+            if ( car->gr > -35 ) {
+                if ( car->gr > 0 ) {
+                    car->gr = 0;
+                }
+                car->gr-=8;
+            }
             break;
     }
 
