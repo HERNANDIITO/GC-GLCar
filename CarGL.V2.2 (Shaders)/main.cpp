@@ -110,29 +110,51 @@ static void SpecialKey(int key, int x, int y)
             car->rr+=8;
             car->tz += 0.05 * cos(glm::radians(car->gc)) ;
             car->tx += 0.05 * sin(glm::radians(car->gc)) ;
+
+            if ( car->gr != 0 ) {
+                if ( car->gr > 0 ) {
+                    car->gr -= 3;
+                } else if (car->gr < 0) {
+                    car->gr += 3;
+                } 
+            }
+
             break;
         case GLUT_KEY_DOWN:   // El coche retrocede
             car->rr-=8;
             car->tz -= 0.05 * cos(glm::radians(car->gc)) ;
             car->tx -= 0.05 * sin(glm::radians(car->gc)) ;
+
+            if ( car->gr != 0 ) {
+                if ( car->gr > 0 ) {
+                    car->gr -= 3;
+                } else if (car->gr < 0) {
+                    car->gr += 3;
+                } 
+            }
+
             break;
         case GLUT_KEY_LEFT:   // El coche gira a la izquierda
-            car->gc+=8;
-            if ( car->gr < 35 ) {
+            car->gc+= 3;
+
+            if ( car->gr < 36 ) {
                 if ( car->gr < 0 ) {
                     car->gr = 0;
                 }
-                car->gr+=8;
+                car->gr+= 3;
             }
+
             break;
         case GLUT_KEY_RIGHT:   // El coche gira a la derecha
-            car->gc-=8;
-            if ( car->gr > -35 ) {
+            car->gc-= 3;
+
+            if ( car->gr > -36 ) {
                 if ( car->gr > 0 ) {
                     car->gr = 0;
                 }
-                car->gr-=8;
+                car->gr-= 3;
             }
+
             break;
     }
 

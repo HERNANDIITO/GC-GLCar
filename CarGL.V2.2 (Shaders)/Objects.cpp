@@ -940,7 +940,7 @@ void __fastcall TEscena::Render()
     glm::mat4 rotateMatrix;
 
     glClearColor(0.0, 0.7, 0.9, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // C�lculo de la vista (c�mara)
