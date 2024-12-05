@@ -653,6 +653,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             break;
         }
         case COCHE_ID: {
+            
             if (escena.show_car) {
                 glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
                 // Asociamos los v�rtices y sus normales
@@ -820,6 +821,9 @@ void __fastcall TEscena::InitGL()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
     // Inicializaci�n de GLEW
     std::cout << "Inicializando GLEW" << std::endl << std::endl;
     if(glewInit() != GLEW_OK)
@@ -919,6 +923,7 @@ void __fastcall TEscena::RenderCars(bool reflejo) {
 
     for (int i=0; i<num_cars; i++)
     {
+        glStencilFunc(GL_ALWAYS, i+1, 0xFF);
         cars[i]->Render(seleccion, reflejo);
     }
 }
@@ -929,6 +934,7 @@ void __fastcall TEscena::RenderObjects(bool reflejo) {
 
     for (int i=0; i<num_objects; i++)
     {
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
         objects[i]->Render(seleccion, reflejo);
     }
 }
@@ -965,6 +971,24 @@ void __fastcall TEscena::Render()
 // Selecciona un objeto a trav�s del rat�n
 void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 {
+    int h, index;
+    GLint viewport[4];
+    
+    index = -1;
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    h = viewport[3];
+
+    glReadPixels(mouse_x, h-mouse_y+81, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+    std::cout << "Coche seleccionado: ";
+    std::cout << index;
+    std::cout << "\n";
+
+    if ( index != 0 ) {
+        seleccion = index;
+        gui.sel = index;
+    }
+
 }
 
 // Crea todo el escenario
@@ -1675,6 +1699,8 @@ void __fastcall TGui::Motion(int x, int y )
 
 void __fastcall TGui::Mouse(int button, int button_state, int x, int y )
 {
-    escena.Pick3D(x, y);
+    if (button_state == GLUT_UP && button == GLUT_LEFT_BUTTON) {
+        escena.Pick3D(x, y);
+    }
 }
 
