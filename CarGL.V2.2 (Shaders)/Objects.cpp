@@ -980,6 +980,7 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 
     glReadPixels(mouse_x, h-mouse_y+81, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 
+
     std::cout << "Coche seleccionado: ";
     std::cout << index;
     std::cout << "\n";
@@ -989,6 +990,7 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
         gui.sel = index;
     }
 
+    gui.glui->sync_live();
 }
 
 // Crea todo el escenario
