@@ -949,12 +949,58 @@ void __fastcall TEscena::Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    // C�lculo de la vista (c�mara)
-    viewMatrix      = glm::mat4(1.0f);
-    rotateMatrix    = glm::make_mat4(view_rotate);
-    viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
-    viewMatrix      = viewMatrix*rotateMatrix;
-    viewMatrix      = glm::scale(viewMatrix,glm::vec3(scale/100.0, scale/100.0, scale/100.0));
+    switch (camara) {
+        case 0: {
+            // CAMARA POR DEFECTO
+            viewMatrix      = glm::mat4(1.0f);
+            rotateMatrix    = glm::make_mat4(view_rotate);
+            viewMatrix      = glm::translate(viewMatrix,glm::vec3(view_position[0], view_position[1], view_position[2]));
+            viewMatrix      = viewMatrix * rotateMatrix;
+            viewMatrix      = glm::scale(viewMatrix,glm::vec3(scale/100.0, scale/100.0, scale/100.0));
+            break;
+        }
+
+        case 1: {
+            // CAMARA AEREA
+            TPrimitiva* selectedCar = escena.GetCar(seleccion);
+
+            glm::vec3 eye       = glm::vec3(selectedCar->tx, 25.0f, selectedCar->tz);
+            glm::vec3 center    = glm::vec3(selectedCar->tx, 0.0f, selectedCar->tz);
+            glm::vec3 up        = glm::vec3(0.0f, 0.0f, 1.0f);
+
+            viewMatrix = glm::lookAt(eye, center, up);
+
+            break;
+
+        }
+
+        case 2: {
+            // CAMARA DE SEGUIMIENTO
+
+            TPrimitiva* selectedCar = escena.GetCar(seleccion);
+            float angleInRadians = glm::radians((selectedCar->gc + selectedCar->rx) * -1);
+
+            glm::mat4 rotationMatrix = glm::rotate(
+                glm::mat4(1.0f),
+                angleInRadians,
+                glm::vec3(0.0f, 1.0f, 0.0f)
+            );         
+
+            glm::vec3 eye       = glm::vec3(selectedCar->tx, 5, selectedCar->tz - 5);
+            glm::vec3 center    = glm::vec3(selectedCar->tx, selectedCar->ty, selectedCar->tz);
+            glm::vec3 up        = glm::vec3(0.0f, 1.0f, 0.0f);
+
+            viewMatrix = glm::lookAt(eye, center, up);
+            viewMatrix = viewMatrix * rotationMatrix;
+
+            break;
+
+        }
+
+        default: {
+            break;
+        }
+    }
 
     glUniform1i(uLuz0Location, gui.light0_enabled);
     glUniformMatrix4fv(uVMatrixLocation, 1, GL_FALSE, glm::value_ptr(viewMatrix)); // Para la luz matrix view pero sin escalado!
@@ -1462,13 +1508,22 @@ void __fastcall TGui::Init(int main_window) {
     new GLUI_StaticText( glui, "" );
 
     // A�ade un panel con texto con el valor de la selecci�n
-    GLUI_Panel *panel0 = new GLUI_Panel(glui, "Seleccion");
-    GLUI_RadioGroup *radioGroup = new GLUI_RadioGroup(panel0, &sel, SEL_ID, controlCallback);
-    glui->add_radiobutton_to_group(radioGroup, "NINGUNO");
+    GLUI_Panel *panelSeleccion = new GLUI_Panel(glui, "Seleccion");
 
+    GLUI_RadioGroup *radioGroupSeleccion = new GLUI_RadioGroup(panelSeleccion, &sel, SEL_ID, controlCallback);
 
-    glui->add_radiobutton_to_group(radioGroup, "COCHE 1");
-    glui->add_radiobutton_to_group(radioGroup, "COCHE 2");
+    glui->add_radiobutton_to_group(radioGroupSeleccion, "NINGUNO");
+    glui->add_radiobutton_to_group(radioGroupSeleccion, "COCHE 1");
+    glui->add_radiobutton_to_group(radioGroupSeleccion, "COCHE 2");
+
+    // A�ade un panel con texto con el valor de la camara
+    GLUI_Panel *panelCamara = new GLUI_Panel(glui, "Camara");
+
+    GLUI_RadioGroup *radioGroupCamara = new GLUI_RadioGroup(panelCamara, &cam, CAM_ID, controlCallback);
+
+    glui->add_radiobutton_to_group(radioGroupCamara, "POR DEFECTO");
+    glui->add_radiobutton_to_group(radioGroupCamara, "AEREA");
+    glui->add_radiobutton_to_group(radioGroupCamara, "SEGUIMIENTO");
 
 
     // A�ade una separaci�n
@@ -1644,6 +1699,12 @@ void __fastcall TGui::ControlCallback( int control )
         }
         case SEL_ID: {
             escena.seleccion = sel;
+            //GLUI_Master.SetFocus(true);
+            glutSetWindow( glui->get_glut_window_id() );
+            break;
+        }
+        case CAM_ID: {
+            escena.camara = cam;
             //GLUI_Master.SetFocus(true);
             glutSetWindow( glui->get_glut_window_id() );
             break;

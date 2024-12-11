@@ -60,6 +60,7 @@
 #define RESET_ID             400
 
 #define SEL_ID               500
+#define CAM_ID               600
 
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3
@@ -111,6 +112,7 @@ class TEscena
 {
 public: // Atributos de la clase
 		int   	seleccion;   	// Objeto seleccionado, 0=ninguno
+        int     camara;
         int		num_objects;    // N�mero de objetos (excepto coches)
         int     num_cars;       // N�mero de coches
 
@@ -191,6 +193,7 @@ public:
 
         // live variables usadas por GLUI
         int             sel;
+        int             cam;
         int             enable_panel2;
         int             light0_enabled;
         int             light1_enabled;
