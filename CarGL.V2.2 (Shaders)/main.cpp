@@ -102,14 +102,16 @@ void Keyboard(unsigned char Key, int x, int y)
 static void SpecialKey(int key, int x, int y)
 {
     TPrimitiva *car = escena.GetCar(escena.seleccion);
+    const float carSpeed = 0.1;
 
     // Comprobar que el puntero car no sea NULL
     switch (key)
     {
         case GLUT_KEY_UP:   // El coche avanza
             car->rr+=8;
-            car->tz += 0.05 * cos(glm::radians(car->gc)) ;
-            car->tx += 0.05 * sin(glm::radians(car->gc)) ;
+
+            car->tz += carSpeed * cos(glm::radians(car->gc)) ;
+            car->tx += carSpeed * sin(glm::radians(car->gc)) ;
 
             if ( car->gr != 0 ) {
                 if ( car->gr > 0 ) {
@@ -122,20 +124,24 @@ static void SpecialKey(int key, int x, int y)
             break;
         case GLUT_KEY_DOWN:   // El coche retrocede
             car->rr-=8;
-            car->tz -= 0.05 * cos(glm::radians(car->gc)) ;
-            car->tx -= 0.05 * sin(glm::radians(car->gc)) ;
+
+            car->tz -= carSpeed * cos(glm::radians(car->gc)) ;
+            car->tx -= carSpeed * sin(glm::radians(car->gc)) ;
 
             if ( car->gr != 0 ) {
                 if ( car->gr > 0 ) {
                     car->gr -= 3;
                 } else if (car->gr < 0) {
                     car->gr += 3;
-                } 
+                }
             }
 
             break;
         case GLUT_KEY_LEFT:   // El coche gira a la izquierda
             car->gc+= 3;
+
+            car->tz += (carSpeed / 2) * cos(glm::radians(car->gc)) ;
+            car->tx += (carSpeed / 2) * sin(glm::radians(car->gc)) ;
 
             if ( car->gr < 36 ) {
                 if ( car->gr < 0 ) {
@@ -147,6 +153,9 @@ static void SpecialKey(int key, int x, int y)
             break;
         case GLUT_KEY_RIGHT:   // El coche gira a la derecha
             car->gc-= 3;
+
+            car->tz += (carSpeed / 2) * cos(glm::radians(car->gc)) ;
+            car->tx += (carSpeed / 2) * sin(glm::radians(car->gc)) ;
 
             if ( car->gr > -36 ) {
                 if ( car->gr > 0 ) {

@@ -978,21 +978,22 @@ void __fastcall TEscena::Render()
             // CAMARA DE SEGUIMIENTO
 
             TPrimitiva* selectedCar = escena.GetCar(seleccion);
-            float angleInRadians = glm::radians((selectedCar->gc + selectedCar->rx) * -1);
+            float angleInRadians = glm::radians(selectedCar->gc + selectedCar->rx);
+            glm::vec3 cameraOffset = glm::vec3(0.00f, 3.5f, -7.5f);
 
             glm::mat4 rotationMatrix = glm::rotate(
                 glm::mat4(1.0f),
                 angleInRadians,
                 glm::vec3(0.0f, 1.0f, 0.0f)
-            );         
+            );     
 
-            glm::vec3 eye       = glm::vec3(selectedCar->tx, 5, selectedCar->tz - 5);
+            cameraOffset = glm::vec3(rotationMatrix * glm::vec4(cameraOffset, 1.0f));    
+
+            glm::vec3 eye       = glm::vec3(selectedCar->tx, selectedCar->ty, selectedCar->tz) + cameraOffset;
             glm::vec3 center    = glm::vec3(selectedCar->tx, selectedCar->ty, selectedCar->tz);
             glm::vec3 up        = glm::vec3(0.0f, 1.0f, 0.0f);
 
             viewMatrix = glm::lookAt(eye, center, up);
-            viewMatrix = viewMatrix * rotationMatrix;
-
             break;
 
         }
@@ -1000,6 +1001,48 @@ void __fastcall TEscena::Render()
         default: {
             break;
         }
+    }
+
+    if ( changeProy ) {
+        changeProy = false;
+        int x, y, ancho, alto;
+        GLUI_Master.get_viewport_area( &x, &y, &ancho, &alto );
+        glViewport( x, y, ancho, alto );
+
+        if (alto == 0) alto = 1;
+        // !!!!! ATENCI�N: comprobar que alto no sea 0, sino divisi�n por 0 !!!!!!
+        escena.xy_aspect = (float)ancho / (float)alto;
+
+        switch (proyeccion) {
+            case 0:
+                std::cout << "Proyeccion paralela seleccionada... \n";
+                escena.projectionMatrix = glm::ortho(
+                    -10.0f, 10.0f,
+                    -10.0f / escena.xy_aspect, 10.0f / escena.xy_aspect,
+                    0.1f, 100.0f
+                );
+                break;
+
+            case 1:
+                std::cout << "Proyeccion paralela perspectiva...  \n";
+                escena.projectionMatrix = glm::perspective(
+                    45.0f,
+                    escena.xy_aspect,
+                    0.1f,
+                    1000.0f
+                );
+                break;
+            
+            default:
+                break;
+        }
+
+        glUseProgram(escena.shaderProgram->ReturnProgramID());
+        glUniformMatrix4fv(escena.uProjectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(escena.projectionMatrix));
+
+        //std::cout << "xy aspect: " << escena.xy_aspect << std::endl;
+
+        glutPostRedisplay();
     }
 
     glUniform1i(uLuz0Location, gui.light0_enabled);
@@ -1507,8 +1550,10 @@ void __fastcall TGui::Init(int main_window) {
     // A�ade una separaci�n
     new GLUI_StaticText( glui, "" );
 
+    obj_panel = new GLUI_Rollout(glui, "Opciones nuevas", true );
+
     // A�ade un panel con texto con el valor de la selecci�n
-    GLUI_Panel *panelSeleccion = new GLUI_Panel(glui, "Seleccion");
+    GLUI_Panel *panelSeleccion = new GLUI_Panel(obj_panel, "Seleccion");
 
     GLUI_RadioGroup *radioGroupSeleccion = new GLUI_RadioGroup(panelSeleccion, &sel, SEL_ID, controlCallback);
 
@@ -1517,7 +1562,7 @@ void __fastcall TGui::Init(int main_window) {
     glui->add_radiobutton_to_group(radioGroupSeleccion, "COCHE 2");
 
     // A�ade un panel con texto con el valor de la camara
-    GLUI_Panel *panelCamara = new GLUI_Panel(glui, "Camara");
+    GLUI_Panel *panelCamara = new GLUI_Panel(obj_panel, "Camara");
 
     GLUI_RadioGroup *radioGroupCamara = new GLUI_RadioGroup(panelCamara, &cam, CAM_ID, controlCallback);
 
@@ -1525,6 +1570,30 @@ void __fastcall TGui::Init(int main_window) {
     glui->add_radiobutton_to_group(radioGroupCamara, "AEREA");
     glui->add_radiobutton_to_group(radioGroupCamara, "SEGUIMIENTO");
 
+    // A�ade un panel con texto con el valor de la proyeccion
+    GLUI_Panel *panelProyeccion = new GLUI_Panel(obj_panel, "Proyeccion");
+
+    GLUI_RadioGroup *radioGroupProyeccion = new GLUI_RadioGroup(panelProyeccion, &proy, PROY_ID, controlCallback);
+
+    glui->add_radiobutton_to_group(radioGroupProyeccion, "PARALELA");
+    glui->add_radiobutton_to_group(radioGroupProyeccion, "PERSPECTIVA");
+
+    // A�ade un panel con texto con el valor de las caras interiores o exteriores
+    GLUI_Panel *panelNormals = new GLUI_Panel(obj_panel, "Cara exterior");
+
+    GLUI_RadioGroup *radioGroupNormals = new GLUI_RadioGroup(panelNormals, &faces, FACES_ID, controlCallback);
+
+    glui->add_radiobutton_to_group(radioGroupNormals, "HORARIO");
+    glui->add_radiobutton_to_group(radioGroupNormals, "ANTIHORARIO");
+
+    // A�ade un panel con texto con el valor de las caras interiores o exteriores
+    GLUI_Panel *panelVisualizacion = new GLUI_Panel(obj_panel, "Visualizacion");
+
+    GLUI_RadioGroup *radioGroupVisualizacion = new GLUI_RadioGroup(panelVisualizacion, &visualization, VISUALIZATION_ID, controlCallback);
+
+    glui->add_radiobutton_to_group(radioGroupVisualizacion, "SOLIDO");
+    glui->add_radiobutton_to_group(radioGroupVisualizacion, "ALAMBRICO");
+    glui->add_radiobutton_to_group(radioGroupVisualizacion, "PUNTOS");
 
     // A�ade una separaci�n
     new GLUI_StaticText( glui, "" );
@@ -1699,16 +1768,30 @@ void __fastcall TGui::ControlCallback( int control )
         }
         case SEL_ID: {
             escena.seleccion = sel;
-            //GLUI_Master.SetFocus(true);
             glutSetWindow( glui->get_glut_window_id() );
             break;
         }
         case CAM_ID: {
             escena.camara = cam;
-            //GLUI_Master.SetFocus(true);
             glutSetWindow( glui->get_glut_window_id() );
             break;
         }
+        case PROY_ID: {
+            glutSetWindow( glui->get_glut_window_id() );
+            escena.changeProy = true;
+            escena.proyeccion = proy;
+            break;
+        }
+        case FACES_ID: {
+            glutSetWindow( glui->get_glut_window_id() );
+            
+            break;
+        }
+        case VISUALIZATION_ID: {
+            glutSetWindow( glui->get_glut_window_id() );
+            
+            break;
+        } 
   } // switch
 }
 
@@ -1741,9 +1824,35 @@ void __fastcall TGui::Reshape( int xx, int yy )
     GLUI_Master.get_viewport_area( &x, &y, &ancho, &alto );
     glViewport( x, y, ancho, alto );
 
+    if (alto == 0) alto = 1;
     // !!!!! ATENCI�N: comprobar que alto no sea 0, sino divisi�n por 0 !!!!!!
     escena.xy_aspect = (float)ancho / (float)alto;
-    escena.projectionMatrix = glm::perspective(45.0f, escena.xy_aspect, 0.1f, 1000.0f);
+
+    switch (proy) {
+    case 0:
+        std::cout << "Proyeccion paralela seleccionada... \n";
+        escena.projectionMatrix = glm::ortho(
+            -10.0f, 10.0f,
+            -10.0f / escena.xy_aspect, 10.0f / escena.xy_aspect,
+            0.1f, 100.0f
+        );
+        break;
+
+    case 1:
+        std::cout << "Proyeccion paralela perspectiva...  \n";
+        escena.projectionMatrix = glm::perspective(
+            45.0f,
+            escena.xy_aspect,
+            0.1f,
+            1000.0f
+        );
+        break;
+    
+    default:
+        break;
+    }
+
+    glUseProgram(escena.shaderProgram->ReturnProgramID());
     glUniformMatrix4fv(escena.uProjectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(escena.projectionMatrix));
 
     //std::cout << "xy aspect: " << escena.xy_aspect << std::endl;

@@ -60,7 +60,10 @@
 #define RESET_ID             400
 
 #define SEL_ID               500
-#define CAM_ID               600
+#define CAM_ID               501
+#define PROY_ID              502
+#define FACES_ID             503
+#define VISUALIZATION_ID     504
 
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3
@@ -113,6 +116,7 @@ class TEscena
 public: // Atributos de la clase
 		int   	seleccion;   	// Objeto seleccionado, 0=ninguno
         int     camara;
+        int     proyeccion;
         int		num_objects;    // N�mero de objetos (excepto coches)
         int     num_cars;       // N�mero de coches
 
@@ -127,6 +131,8 @@ public: // Atributos de la clase
 		int uVMatrixLocation;
 		int uColorLocation;
 		int uLuz0Location;
+
+        bool changeProy = false;
 
 		glm::mat4 projectionMatrix; // Almacena la matriz de proyecci�n
         glm::mat4 viewMatrix;       // Almacena la matriz de la vista (c�mara)
@@ -194,6 +200,9 @@ public:
         // live variables usadas por GLUI
         int             sel;
         int             cam;
+        int             proy;
+        int             faces;
+        int             visualization;
         int             enable_panel2;
         int             light0_enabled;
         int             light1_enabled;
