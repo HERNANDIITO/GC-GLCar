@@ -64,6 +64,7 @@
 #define PROY_ID              502
 #define FACES_ID             503
 #define VISUALIZATION_ID     504
+#define CULLING_ID           50
 
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3
@@ -132,7 +133,7 @@ public: // Atributos de la clase
 		int uColorLocation;
 		int uLuz0Location;
 
-        bool changeProy = false;
+        bool changeProy;
 
 		glm::mat4 projectionMatrix; // Almacena la matriz de proyecci�n
         glm::mat4 viewMatrix;       // Almacena la matriz de la vista (c�mara)

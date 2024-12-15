@@ -306,7 +306,6 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
     glm::mat4   modelMatrix;
     glm::mat4   modelViewMatrix;
     switch (tipo) {
-
         case CARRETERA_ID: {
             if (escena.show_road) {
                 // C�lculo de la ModelView
@@ -779,7 +778,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
 TEscena::TEscena() {
 
-    seleccion = 0;
+    seleccion = 1;
     num_objects = 0;
     num_cars = 0;
 
@@ -825,6 +824,8 @@ void __fastcall TEscena::InitGL()
     // Habilita el z_buffer
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
+
+    glCullFace(GL_BACK);
 
     glEnable(GL_STENCIL_TEST);
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
@@ -1622,7 +1623,7 @@ void __fastcall TGui::Init(int main_window) {
 
     new GLUI_Checkbox( obj_panel, "Modo Alambrico", &escena.wireframe, 1, controlCallback );
     glui->add_column_to_panel(obj_panel, true);
-    new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, 1, controlCallback );
+    new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, CULLING_ID, controlCallback );
     new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, 1, controlCallback );
 
     /******** A�ade controles para las luces ********/
@@ -1786,6 +1787,7 @@ void __fastcall TGui::ControlCallback( int control )
         }
         case SEL_ID: {  
             TPrimitiva* selectedCar = escena.GetCar(escena.seleccion);
+
             selectedCar->colores[0][0] = 0.5f;
             selectedCar->colores[0][1] = 0.5f;
             selectedCar->colores[0][2] = 0.5f;
@@ -1794,10 +1796,12 @@ void __fastcall TGui::ControlCallback( int control )
             escena.seleccion = sel;
 
             selectedCar = escena.GetCar(escena.seleccion);
+
             selectedCar->colores[0][0] = 0.7f;
             selectedCar->colores[0][1] = 1.0f;
             selectedCar->colores[0][2] = 0.1f;
             selectedCar->colores[0][3] = 1.0f;
+
             glutSetWindow( glui->get_glut_window_id() );
             break;
         }
@@ -1813,16 +1817,55 @@ void __fastcall TGui::ControlCallback( int control )
             break;
         }
         case FACES_ID: {
+
+            std::cout << "CARAS INVERTIDAS \n";
+
+            if ( faces == 0 ) {
+                glFrontFace(GL_CW);
+                std::cout << "Sentido horario\n";
+            } else {
+                glFrontFace(GL_CCW);
+                std::cout << "Sentido antihorario\n";
+            }
+
+            if ( escena.culling == 0 ) {
+                std::cout << "Culling desactivado\n";
+                glDisable(GL_CULL_FACE);
+            } else {
+                std::cout << "Culling activado\n";
+                glEnable(GL_CULL_FACE);
+            }
+
             glutSetWindow( glui->get_glut_window_id() );
-            
             break;
         }
         case VISUALIZATION_ID: {
             glutSetWindow( glui->get_glut_window_id() );
             
             break;
-        } 
-  } // switch
+        }
+        case CULLING_ID: {
+            
+            if ( faces == 0 ) {
+                glFrontFace(GL_CW);
+                std::cout << "Sentido horario\n";
+            } else {
+                glFrontFace(GL_CCW);
+                std::cout << "Sentido antihorario\n";
+            }
+
+            if ( escena.culling == 0 ) {
+                std::cout << "Culling desactivado\n";
+                glDisable(GL_CULL_FACE);
+            } else {
+                std::cout << "Culling activado\n";
+                glEnable(GL_CULL_FACE);
+            }
+
+            glutSetWindow( glui->get_glut_window_id() );
+            break;
+        }
+  }
 }
 
 /***************************************** TGui::Idle() ***********/
