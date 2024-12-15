@@ -64,7 +64,8 @@
 #define PROY_ID              502
 #define FACES_ID             503
 #define VISUALIZATION_ID     504
-#define CULLING_ID           50
+#define CULLING_ID           505
+#define Z_BUFFER_ID          506
 
 // Datos del formato 3DS (x, y, z, A, B, C, u, v)
 #define POSITION_COMPONENT_COUNT    3

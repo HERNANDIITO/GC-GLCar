@@ -953,7 +953,6 @@ void __fastcall TEscena::Render()
 
     glClearColor(0.0, 0.7, 0.9, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     switch (camara) {
         case 0: {
@@ -1624,7 +1623,7 @@ void __fastcall TGui::Init(int main_window) {
     new GLUI_Checkbox( obj_panel, "Modo Alambrico", &escena.wireframe, 1, controlCallback );
     glui->add_column_to_panel(obj_panel, true);
     new GLUI_Checkbox( obj_panel, "Culling", &escena.culling, CULLING_ID, controlCallback );
-    new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, 1, controlCallback );
+    new GLUI_Checkbox( obj_panel, "Z Buffer", &escena.z_buffer, Z_BUFFER_ID, controlCallback );
 
     /******** A�ade controles para las luces ********/
 
@@ -1839,13 +1838,11 @@ void __fastcall TGui::ControlCallback( int control )
             glutSetWindow( glui->get_glut_window_id() );
             break;
         }
-        case VISUALIZATION_ID: {
-            glutSetWindow( glui->get_glut_window_id() );
-            
-            break;
-        }
         case CULLING_ID: {
-            
+
+            std::cout << "CULLING! \n";
+
+
             if ( faces == 0 ) {
                 glFrontFace(GL_CW);
                 std::cout << "Sentido horario\n";
@@ -1863,6 +1860,42 @@ void __fastcall TGui::ControlCallback( int control )
             }
 
             glutSetWindow( glui->get_glut_window_id() );
+            break;
+        }
+        case VISUALIZATION_ID: {
+            switch (visualization)
+            {
+            case 0:
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                break;
+
+            case 1:
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                break;
+
+            case 2:
+                glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+                break;
+            
+            default:
+                break;
+            }
+        }
+        case Z_BUFFER_ID: {
+            
+            std::cout << "Z-Buffer clickado:  \n";
+
+            if ( escena.z_buffer == 0 ) {
+                std::cout << "Z-Buffer desactivado \n";
+                glEnable(GL_DEPTH_TEST);
+
+            } else {
+                std::cout << "Z-Buffer desactivado \n";
+                glDisable(GL_DEPTH_TEST);
+
+            }
+            
+
             break;
         }
   }
