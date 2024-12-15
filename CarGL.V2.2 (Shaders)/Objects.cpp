@@ -287,6 +287,11 @@ TPrimitiva::TPrimitiva(int DL, int t)
 
 		    memcpy(colores, coloresc_c, 8*sizeof(float));
 
+            colores[0][0] = 0.5f;
+            colores[0][1] = 0.5f;
+            colores[0][2] = 0.5f;
+            colores[0][3] = 1.0f;
+
             //************************ Cargar modelos 3ds ***********************************
             // formato 8 floats por v�rtice (x, y, z, A, B, C, u, v)
             modelo0 = Load3DS("../../modelos/Pablo/car.3ds", &num_vertices0);
@@ -774,7 +779,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
 
 TEscena::TEscena() {
 
-    seleccion = 1;
+    seleccion = 0;
     num_objects = 0;
     num_cars = 0;
 
@@ -1069,14 +1074,27 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 
     glReadPixels(mouse_x, h-mouse_y+81, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 
-
     std::cout << "Coche seleccionado: ";
     std::cout << index;
     std::cout << "\n";
 
     if ( index != 0 ) {
+        // Hacemos gris el coche seleccionado previamente
+        TPrimitiva* selectedCar = GetCar(seleccion);
+        selectedCar->colores[0][0] = 0.5f;
+        selectedCar->colores[0][1] = 0.5f;
+        selectedCar->colores[0][2] = 0.5f;
+        selectedCar->colores[0][3] = 1.0f;
+
         seleccion = index;
         gui.sel = index;
+
+        // Ponemos bonito el coche recien seleccionado
+        selectedCar = GetCar(seleccion);
+        selectedCar->colores[0][0] = 0.7f;
+        selectedCar->colores[0][1] = 1.0f;
+        selectedCar->colores[0][2] = 0.1f;
+        selectedCar->colores[0][3] = 1.0f;
     }
 
     gui.glui->sync_live();
@@ -1090,9 +1108,9 @@ void __fastcall TEscena::CrearEscenario()
     TPrimitiva *car1 = new TPrimitiva(1, COCHE_ID);
     TPrimitiva *car2 = new TPrimitiva(2, COCHE_ID);
 
-    car2->colores[0][0] = 0.1;
-    car2->colores[0][1] = 0.4;
-    car2->colores[0][2] = 0.9;
+    car2->colores[0][0] = 0.5;
+    car2->colores[0][1] = 0.5;
+    car2->colores[0][2] = 0.5;
     car2->colores[0][3] = 1.0;
     car2->tx = 2;
     car2->tz = 3;
@@ -1520,7 +1538,7 @@ void __fastcall TEscena::CrearEscenario()
 
 TGui::TGui()
 {
-    sel = 1;
+    sel = 0;
     enable_panel2 = 1;
     light0_enabled = 1;
     light1_enabled = 1;
@@ -1766,8 +1784,20 @@ void __fastcall TGui::ControlCallback( int control )
             escena.scale = 100.0;
             break;
         }
-        case SEL_ID: {
+        case SEL_ID: {  
+            TPrimitiva* selectedCar = escena.GetCar(escena.seleccion);
+            selectedCar->colores[0][0] = 0.5f;
+            selectedCar->colores[0][1] = 0.5f;
+            selectedCar->colores[0][2] = 0.5f;
+            selectedCar->colores[0][3] = 1.0f;
+
             escena.seleccion = sel;
+
+            selectedCar = escena.GetCar(escena.seleccion);
+            selectedCar->colores[0][0] = 0.7f;
+            selectedCar->colores[0][1] = 1.0f;
+            selectedCar->colores[0][2] = 0.1f;
+            selectedCar->colores[0][3] = 1.0f;
             glutSetWindow( glui->get_glut_window_id() );
             break;
         }
