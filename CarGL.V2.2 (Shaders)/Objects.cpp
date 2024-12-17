@@ -1935,17 +1935,20 @@ void __fastcall TGui::ControlCallback( int control )
         }
         case LIGHT1_AMBIENT_ID: {
             escena.light1_ambient[1] = escena.light1_ambient[0]; 
-            escena.light1_ambient[2] = escena.light1_ambient[0]; 
+            escena.light1_ambient[2] = escena.light1_ambient[0];
+            escena.light1_ambient[3] = 1.0f;
             break;
         }
         case LIGHT1_DIFFUSE_ID: {
             escena.light1_diffuse[1] = escena.light1_diffuse[0]; 
-            escena.light1_diffuse[2] = escena.light1_diffuse[0]; 
+            escena.light1_diffuse[2] = escena.light1_diffuse[0];
+            escena.light1_diffuse[3] = 1.0f;
             break;
         }
         case LIGHT1_SPECULAR_ID: {
             escena.light1_specular[1] = escena.light1_specular[0]; 
-            escena.light1_specular[2] = escena.light1_specular[0]; 
+            escena.light1_specular[2] = escena.light1_specular[0];
+            escena.light1_specular[3] = 1.0f;
             break;
         }
         case LIGHT2_ENABLED_ID: {
@@ -1967,17 +1970,20 @@ void __fastcall TGui::ControlCallback( int control )
         }
         case LIGHT2_AMBIENT_ID: {
             escena.light2_ambient[1] = escena.light2_ambient[0]; 
-            escena.light2_ambient[2] = escena.light2_ambient[0]; 
+            escena.light2_ambient[2] = escena.light2_ambient[0];
+            escena.light2_ambient[3] = 1.0f;
             break;
         }
         case LIGHT2_DIFFUSE_ID: {
             escena.light2_diffuse[1] = escena.light2_diffuse[0]; 
-            escena.light2_diffuse[2] = escena.light2_diffuse[0]; 
+            escena.light2_diffuse[2] = escena.light2_diffuse[0];
+            escena.light2_diffuse[3] = 1.0f;
             break;
         }
         case LIGHT2_SPECULAR_ID: {
             escena.light2_specular[1] = escena.light2_specular[0]; 
-            escena.light2_specular[2] = escena.light2_specular[0]; 
+            escena.light2_specular[2] = escena.light2_specular[0];
+            escena.light02specular[3] = 1.0f;
             break;
         }
         case ENABLE_ID: {
