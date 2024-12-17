@@ -47,12 +47,25 @@
 
 // IDs para los callbacks de TGui
 #define LIGHT0_ENABLED_ID    200
-#define LIGHT1_ENABLED_ID    201
 #define LIGHT0_POSITION_ID   210
-#define LIGHT1_POSITION_ID   211
 #define LIGHT0_INTENSITY_ID  220
-#define LIGHT1_INTENSITY_ID  221
+#define LIGHT0_AMBIENT_ID    230
+#define LIGHT0_DIFFUSE_ID    240
+#define LIGHT0_SPECULAR_ID   250
 
+#define LIGHT1_ENABLED_ID    201
+#define LIGHT1_POSITION_ID   211
+#define LIGHT1_INTENSITY_ID  221
+#define LIGHT1_AMBIENT_ID    231
+#define LIGHT1_DIFFUSE_ID    241
+#define LIGHT1_SPECULAR_ID   251
+
+#define LIGHT2_ENABLED_ID    202
+#define LIGHT2_POSITION_ID   212
+#define LIGHT2_INTENSITY_ID  222
+#define LIGHT2_AMBIENT_ID    232
+#define LIGHT2_DIFFUSE_ID    242
+#define LIGHT2_SPECULAR_ID   252
 
 #define ENABLE_ID            300
 #define DISABLE_ID           301
@@ -128,11 +141,32 @@ public: // Atributos de la clase
         // Handles de los attributes y uniforms
         int aPositionLocation;
         int aNormalLocation;
+        
         int uProjectionMatrixLocation;
         int uMVMatrixLocation;
 		int uVMatrixLocation;
 		int uColorLocation;
+
 		int uLuz0Location;
+		int uLuz0Ambient;
+		int uLuz0Diffuse;
+		int uLuz0Specular;
+		int uLuz0Position;
+		int uLuz0Intensity;
+
+		int uLuz1Location;
+		int uLuz1Ambient;
+		int uLuz1Diffuse;
+		int uLuz1Specular;
+		int uLuz1Position;
+		int uLuz1Intensity;
+
+		int uLuz2Location;
+		int uLuz2Ambient;
+		int uLuz2Diffuse;
+		int uLuz2Specular;
+		int uLuz2Position;
+		int uLuz2Intensity;
 
         bool changeProy;
 
@@ -151,6 +185,11 @@ public: // Atributos de la clase
         GLfloat light1_diffuse[4];
         GLfloat light1_specular[4];
         GLfloat light1_position[4];
+
+        GLfloat light2_ambient[4];
+        GLfloat light2_diffuse[4];
+        GLfloat light2_specular[4];
+        GLfloat light2_position[4];
 
         GLfloat mat_ambient[4];
         GLfloat mat_diffuse[4];
@@ -228,18 +267,25 @@ public:
         int             faces;
         int             visualization;
         int             enable_panel2;
+
         int             light0_enabled;
-        int             light1_enabled;
         float           light0_intensity;
-        float           light1_intensity;
         float           light0_position[4];
+
+        int             light1_enabled;
+        float           light1_intensity;
         float           light1_position[4];
+
+        int             light2_enabled;
+        float           light2_intensity;
+        float           light2_position[4];
 
         bool            pressingCtrl;
 
         GLUI            *glui, *glui2;
         GLUI_Spinner    *light0_spinner;
         GLUI_Spinner    *light1_spinner;
+        GLUI_Spinner    *light2_spinner;
         GLUI_RadioGroup *radio;
         GLUI_Panel      *obj_panel;
         GLUI_Rotation   *view_rot;

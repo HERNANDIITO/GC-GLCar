@@ -1,33 +1,89 @@
+attribute vec4 a_Position;              // in: Posici√≥n de cada v√©rtice
+attribute vec3 a_Normal;                // in: Normal de cada v√©rtice
 
-attribute vec4 a_Position;	        // in: PosiciÛn de cada vÈrtice
-attribute vec3 a_Normal;	        // in: Normal de cada vÈrtice
+uniform mat4 u_ProjectionMatrix;        // in: Matriz Projection
+uniform mat4 u_MVMatrix;                // in: Matriz ModelView
+uniform mat4 u_VMatrix;                 // in: Matriz View (c√°mara)
+uniform vec4 u_Color;                   // in: Color del objeto
 
-uniform mat4 u_ProjectionMatrix; 	// in: Matriz Projection
-uniform mat4 u_MVMatrix;	        // in: Matriz ModelView
-uniform mat4 u_VMatrix;             // in: Matriz View (c·mara)
-uniform vec4 u_Color;		        // in: Color del objeto
-uniform int  u_Luz0;                // in: Indica si la luz 0 est· encedida
+// Uniformes para luz 0
+uniform int uLuz0Location;
+uniform vec4 uLuz0Ambient;
+uniform vec4 uLuz0Diffuse;
+uniform vec4 uLuz0Specular;
+uniform vec4 uLuz0Position;
+uniform float uLuz0Intensity;
 
-varying vec4 v_Color;		        // out: Color al fragment shader
+// Uniformes para luz 1
+uniform int uLuz1Location;
+uniform vec4 uLuz1Ambient;
+uniform vec4 uLuz1Diffuse;
+uniform vec4 uLuz1Specular;
+uniform vec4 uLuz1Position;
+uniform float uLuz1Intensity;
 
-void main()
-{
-    vec4 LightPos = u_VMatrix*vec4( -100, 100, 50, 1);	// PosiciÛn de la luz [fija]
-    vec3 P = vec3(u_MVMatrix * a_Position);	            // PosiciÛn del vÈrtice
-	vec3 N = vec3(u_MVMatrix * vec4(a_Normal, 0.0));    // Normal del vÈrtice
+// Uniformes para luz 2
+uniform int uLuz2Location;
+uniform vec4 uLuz2Ambient;
+uniform vec4 uLuz2Diffuse;
+uniform vec4 uLuz2Specular;
+uniform vec4 uLuz2Position;
+uniform float uLuz2Intensity;
 
-	float d = length(LightPos.xyz - P);			        // distancia de la luz
-	vec3  L = normalize(LightPos.xyz - P);			    // Vector Luz
+varying vec4 v_Color;                   // out: Color al fragment shader
 
-	float ambient = 0.15;                               // (15% de int. ambiente)
-	float diffuse = 0.0;
+void main() {
+    vec3 P = vec3(u_MVMatrix * a_Position);             // Posici√≥n del v√©rtice en espacio de vista
+    vec3 N = normalize(vec3(u_MVMatrix * vec4(a_Normal, 0.0))); // Normal del v√©rtice en espacio de vista
 
-	if (u_Luz0>0) {                                     // Si la luz 0 est· encendida se calcula la intesidad difusa de L
-        diffuse = max(dot(L, N), 0.0);		            // C·lculo de la int. difusa
-        // C·lculo de la atenuaciÛn
-        float attenuation = 80.0/(0.25+(0.01*d)+(0.003*d*d));
-        diffuse = diffuse*attenuation;
-	}
-	v_Color = u_Color * (ambient + diffuse);
-	gl_Position = u_ProjectionMatrix * vec4(P, 1.0);
+    vec4 ambientLight = vec4(0.0);
+    vec4 diffuseLight = vec4(0.0);
+    vec4 specularLight = vec4(0.0);
+
+    vec3 V = normalize(-P); // Vector hacia la c√°mara (vista)
+
+    // Procesar luz 0 si est√° activa
+    if (uLuz0Location > 0) {
+        vec3 L0 = normalize(vec3(u_VMatrix * uLuz0Position) - P);
+        float diff0 = max(dot(N, L0), 0.0) * uLuz0Intensity;
+        diffuseLight += uLuz0Diffuse * diff0;
+        ambientLight += uLuz0Ambient;
+
+        // C√°lculo especular para luz 0
+        vec3 R0 = reflect(-L0, N); // Vector reflejado
+        float spec0 = pow(max(dot(R0, V), 0.0), 32.0) * uLuz0Intensity; // Exponente especular
+        specularLight += uLuz0Specular * spec0;
+    }
+
+    // Procesar luz 1 si est√° activa
+    if (uLuz1Location > 0) {
+        vec3 L1 = normalize(vec3(u_VMatrix * uLuz1Position) - P);
+        float diff1 = max(dot(N, L1), 0.0) * uLuz1Intensity;
+        diffuseLight += uLuz1Diffuse * diff1;
+        ambientLight += uLuz1Ambient;
+
+        // C√°lculo especular para luz 1
+        vec3 R1 = reflect(-L1, N);
+        float spec1 = pow(max(dot(R1, V), 0.0), 32.0) * uLuz1Intensity;
+        specularLight += uLuz1Specular * spec1;
+    }
+
+    // Procesar luz 2 si est√° activa
+    if (uLuz2Location > 0) {
+        vec3 L2 = normalize(vec3(u_VMatrix * uLuz2Position) - P);
+        float diff2 = max(dot(N, L2), 0.0) * uLuz2Intensity;
+        diffuseLight += uLuz2Diffuse * diff2;
+        ambientLight += uLuz2Ambient;
+
+        // C√°lculo especular para luz 2
+        vec3 R2 = reflect(-L2, N);
+        float spec2 = pow(max(dot(R2, V), 0.0), 32.0) * uLuz2Intensity;
+        specularLight += uLuz2Specular * spec2;
+    }
+
+    // Combinar luces con el color del objeto
+    v_Color = u_Color * (ambientLight + diffuseLight) + specularLight;
+
+    // Transformar la posici√≥n del v√©rtice
+    gl_Position = u_ProjectionMatrix * vec4(P, 1.0);
 }
