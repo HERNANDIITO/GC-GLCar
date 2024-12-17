@@ -1003,6 +1003,15 @@ void __fastcall TEscena::Render()
 
         }
 
+        case 3: {
+            // CAMARA LIBRE
+
+            glm::vec3 cameraPos = glm::vec3(camX, camY, camZ);
+            glm::vec3 target = glm::vec3(targetX, targetY, targetZ); // Centro de la escena
+            glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);     // Arriba en el mundo
+
+            viewMatrix = glm::lookAt(cameraPos, target, up);
+        }
         default: {
             break;
         }
@@ -1078,7 +1087,7 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
     std::cout << index;
     std::cout << "\n";
 
-    if ( index != 0 ) {
+    if ( index > 0 ) {
         // Hacemos gris el coche seleccionado previamente
         TPrimitiva* selectedCar = GetCar(seleccion);
         selectedCar->colores[0][0] = 0.5f;
@@ -1587,6 +1596,7 @@ void __fastcall TGui::Init(int main_window) {
     glui->add_radiobutton_to_group(radioGroupCamara, "POR DEFECTO");
     glui->add_radiobutton_to_group(radioGroupCamara, "AEREA");
     glui->add_radiobutton_to_group(radioGroupCamara, "SEGUIMIENTO");
+    glui->add_radiobutton_to_group(radioGroupCamara, "LIBRE");
 
     // A�ade un panel con texto con el valor de la proyeccion
     GLUI_Panel *panelProyeccion = new GLUI_Panel(obj_panel, "Proyeccion");
@@ -1782,6 +1792,20 @@ void __fastcall TGui::ControlCallback( int control )
             memcpy(escena.view_position,view_position_c,3*sizeof(float));
             view_rot->reset();
             escena.scale = 100.0;
+
+            escena.camX = 0.0f;
+            escena.camY = 0.0f;
+            escena.camZ = 0.0f;
+
+            escena.targetX = 0.0f;
+            escena.targetY = 0.0f;
+            escena.targetZ = 0.0f;
+
+            escena.cameraDistance = 10.0f;
+
+            escena.yaw   = 0.0f;
+            escena.pitch = 0.0f;
+
             break;
         }
         case SEL_ID: {  
@@ -1968,8 +1992,72 @@ void __fastcall TGui::Reshape( int xx, int yy )
 
 /***************************************** gui::motion() **********/
 
-void __fastcall TGui::Motion(int x, int y )
+void __fastcall TGui::Motion( int x, int y )
 {
+    int deltaX = x - gui.xIni;
+    int deltaY = y - gui.yIni;
+
+    deltaX *= escena.sensibility;
+    deltaY *= escena.sensibility;
+    
+    if ( !escena.isShiftPressed && escena.leftButtonPressed ) { // ROTACION
+
+        std::cout << "Rotacion!! \n";
+
+        escena.yaw   += deltaX;
+        escena.pitch += deltaY;
+
+        if (escena.pitch > 89.0f) escena.pitch = 89.0f;
+        if (escena.pitch < -89.0f) escena.pitch = -89.0f;
+
+        if ( escena.isCtrlPressed ) {
+
+            escena.targetX = escena.camX + cos(glm::radians(escena.pitch)) * sin(glm::radians(escena.yaw));
+            escena.targetY = escena.camY + sin(glm::radians(escena.pitch));
+            escena.targetZ = escena.camZ + cos(glm::radians(escena.pitch)) * cos(glm::radians(escena.yaw));
+
+        } else {
+
+            escena.camX = escena.targetX + escena.cameraDistance * cos(glm::radians(escena.pitch)) * sin(glm::radians(escena.yaw));
+            escena.camY = escena.targetY + escena.cameraDistance * sin(glm::radians(escena.pitch));
+            escena.camZ = escena.targetZ + escena.cameraDistance * cos(glm::radians(escena.pitch)) * cos(glm::radians(escena.yaw));
+        
+        }
+    
+    } else if ( escena.isShiftPressed && escena.leftButtonPressed ) { // TRASLACION
+
+        std::cout << "Traslacion!! \n";
+
+        if (escena.isCtrlPressed) {
+            // Movimiento hacia adelante/atrás en el eje Z (dirección de la cámara)
+
+            escena.camZ += deltaY * escena.sensibility;
+            escena.targetZ += deltaY * escena.sensibility;
+
+        } else {
+
+            escena.camX += deltaX * escena.sensibility;
+            escena.camY += deltaY * escena.sensibility;
+            
+            escena.targetX += deltaX * escena.sensibility;
+            escena.targetY += deltaY * escena.sensibility;
+
+        }
+
+    }
+
+    if ( escena.rightButtonPressed ) { // ESCALADO
+
+        std::cout << "Escalado!! \n";
+
+        escena.cameraDistance -= deltaY * 0.1f;
+        if (escena.cameraDistance < 2.0f) escena.cameraDistance = 2.0f;
+
+        escena.camX = escena.targetX + escena.cameraDistance * cos(glm::radians(escena.pitch)) * sin(glm::radians(escena.yaw));
+        escena.camY = escena.targetY + escena.cameraDistance * sin(glm::radians(escena.pitch));
+        escena.camZ = escena.targetZ + escena.cameraDistance * cos(glm::radians(escena.pitch)) * cos(glm::radians(escena.yaw));
+    }
+
     glutPostRedisplay();
 }
 
@@ -1977,8 +2065,50 @@ void __fastcall TGui::Motion(int x, int y )
 
 void __fastcall TGui::Mouse(int button, int button_state, int x, int y )
 {
+
+    int mod = glutGetModifiers();
+
+    escena.isCtrlPressed = false;
+    escena.isShiftPressed = false;
+
+    if ( mod & GLUT_ACTIVE_CTRL ) {
+        escena.isCtrlPressed = true;
+        std::cout << "PRESSING CONTROL!!\n";
+    }
+    
+    if ( mod & GLUT_ACTIVE_SHIFT ) {
+        escena.isShiftPressed = true; 
+        std::cout << "PRESSING SHIFT!!\n";
+    }
+
+    // Controlar el click izquierdo
+    if ( button_state == GLUT_DOWN && button == GLUT_LEFT_BUTTON && cam == 3 ) {
+        gui.xIni = x;
+        gui.yIni = y;
+
+        escena.leftButtonPressed = true;
+    }
+    
     if (button_state == GLUT_UP && button == GLUT_LEFT_BUTTON) {
         escena.Pick3D(x, y);
+        escena.leftButtonPressed = false;
+
     }
+    
+    // Controlar el click derecho
+    if ( button_state == GLUT_DOWN && button == GLUT_RIGHT_BUTTON && cam == 3 ) {
+        gui.xIni = x;
+        gui.yIni = y;
+
+        escena.rightButtonPressed = true;
+    }
+
+    if ( button_state == GLUT_UP && button == GLUT_RIGHT_BUTTON && cam == 3 ) {
+        gui.xIni = x;
+        gui.yIni = y;
+
+        escena.rightButtonPressed = false;
+    }
+    
 }
 

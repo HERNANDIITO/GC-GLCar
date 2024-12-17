@@ -169,9 +169,29 @@ public: // Atributos de la clase
         int     show_wheels;
         int     show_road;
 
+        GLfloat yaw;
+        GLfloat pitch;
+        GLfloat cameraDistance = 10.0f;
+        GLfloat sensibility = 0.05f;
+
+        GLfloat camX = cameraDistance;
+        GLfloat camY = cameraDistance;
+        GLfloat camZ = cameraDistance;
+
+        GLfloat targetX = 0.0f;
+        GLfloat targetY = 0.0f;
+        GLfloat targetZ = 0.0f;
+
+        bool isCtrlPressed      = false;
+        bool isShiftPressed     = false;
+        bool leftButtonPressed  = false;
+        bool rightButtonPressed = false;
+
         GLfloat view_position[3];
         GLfloat view_rotate[16];
         float   scale;
+
+
 
 public: // M�todos
 		TEscena();
@@ -202,6 +222,8 @@ public:
         // live variables usadas por GLUI
         int             sel;
         int             cam;
+        int             xIni;
+        int             yIni;
         int             proy;
         int             faces;
         int             visualization;
@@ -212,6 +234,8 @@ public:
         float           light1_intensity;
         float           light0_position[4];
         float           light1_position[4];
+
+        bool            pressingCtrl;
 
         GLUI            *glui, *glui2;
         GLUI_Spinner    *light0_spinner;

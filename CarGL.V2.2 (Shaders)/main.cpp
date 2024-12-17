@@ -91,8 +91,9 @@ void Keyboard(unsigned char Key, int x, int y)
         case 'Q':
             exit(0);
             break;
-
     }
+
+
 
     glutPostRedisplay();
 }
@@ -164,9 +165,13 @@ static void SpecialKey(int key, int x, int y)
                 car->gr-= 3;
             }
 
+            break; 
+        default:
+            std::cout << "KEY PRESSED: " << key << '\n';
             break;
+            
     }
-
+    
     glutPostRedisplay();
 }
 
