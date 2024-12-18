@@ -662,7 +662,7 @@ void __fastcall TPrimitiva::Render(int seleccion, bool reflejo)
             break;
         }
         case COCHE_ID: {
-            
+
             if (escena.show_car) {
                 glUniform4fv(escena.uColorLocation, 1, (const GLfloat *) colores[0]);
                 // Asociamos los v�rtices y sus normales
@@ -1017,9 +1017,9 @@ void __fastcall TEscena::Render()
                 glm::mat4(1.0f),
                 angleInRadians,
                 glm::vec3(0.0f, 1.0f, 0.0f)
-            );     
+            );
 
-            cameraOffset = glm::vec3(rotationMatrix * glm::vec4(cameraOffset, 1.0f));    
+            cameraOffset = glm::vec3(rotationMatrix * glm::vec4(cameraOffset, 1.0f));
 
             glm::vec3 eye       = glm::vec3(selectedCar->tx, selectedCar->ty, selectedCar->tz) + cameraOffset;
             glm::vec3 center    = glm::vec3(selectedCar->tx, selectedCar->ty, selectedCar->tz);
@@ -1073,7 +1073,7 @@ void __fastcall TEscena::Render()
                     1000.0f
                 );
                 break;
-            
+
             default:
                 break;
         }
@@ -1131,7 +1131,7 @@ void __fastcall TEscena::Pick3D(int mouse_x, int mouse_y)
 {
     int h, index;
     GLint viewport[4];
-    
+
     index = -1;
     glGetIntegerv(GL_VIEWPORT, viewport);
     h = viewport[3];
@@ -1899,20 +1899,20 @@ void __fastcall TGui::ControlCallback( int control )
             break;
         }
         case LIGHT0_AMBIENT_ID: {
-            escena.light0_ambient[1] = escena.light0_ambient[0]; 
-            escena.light0_ambient[2] = escena.light0_ambient[0]; 
+            escena.light0_ambient[1] = escena.light0_ambient[0];
+            escena.light0_ambient[2] = escena.light0_ambient[0];
             escena.light0_ambient[3] = 1.0f;
             break;
         }
         case LIGHT0_DIFFUSE_ID: {
-            escena.light0_diffuse[1] = escena.light0_diffuse[0]; 
-            escena.light0_diffuse[2] = escena.light0_diffuse[0]; 
+            escena.light0_diffuse[1] = escena.light0_diffuse[0];
+            escena.light0_diffuse[2] = escena.light0_diffuse[0];
             escena.light0_diffuse[3] = 1.0f;
             break;
         }
         case LIGHT0_SPECULAR_ID: {
-            escena.light0_specular[1] = escena.light0_specular[0]; 
-            escena.light0_specular[2] = escena.light0_specular[0]; 
+            escena.light0_specular[1] = escena.light0_specular[0];
+            escena.light0_specular[2] = escena.light0_specular[0];
             escena.light0_specular[3] = 1.0f;
             break;
         }
@@ -1934,19 +1934,19 @@ void __fastcall TGui::ControlCallback( int control )
             break;
         }
         case LIGHT1_AMBIENT_ID: {
-            escena.light1_ambient[1] = escena.light1_ambient[0]; 
+            escena.light1_ambient[1] = escena.light1_ambient[0];
             escena.light1_ambient[2] = escena.light1_ambient[0];
             escena.light1_ambient[3] = 1.0f;
             break;
         }
         case LIGHT1_DIFFUSE_ID: {
-            escena.light1_diffuse[1] = escena.light1_diffuse[0]; 
+            escena.light1_diffuse[1] = escena.light1_diffuse[0];
             escena.light1_diffuse[2] = escena.light1_diffuse[0];
             escena.light1_diffuse[3] = 1.0f;
             break;
         }
         case LIGHT1_SPECULAR_ID: {
-            escena.light1_specular[1] = escena.light1_specular[0]; 
+            escena.light1_specular[1] = escena.light1_specular[0];
             escena.light1_specular[2] = escena.light1_specular[0];
             escena.light1_specular[3] = 1.0f;
             break;
@@ -1969,21 +1969,21 @@ void __fastcall TGui::ControlCallback( int control )
             break;
         }
         case LIGHT2_AMBIENT_ID: {
-            escena.light2_ambient[1] = escena.light2_ambient[0]; 
+            escena.light2_ambient[1] = escena.light2_ambient[0];
             escena.light2_ambient[2] = escena.light2_ambient[0];
             escena.light2_ambient[3] = 1.0f;
             break;
         }
         case LIGHT2_DIFFUSE_ID: {
-            escena.light2_diffuse[1] = escena.light2_diffuse[0]; 
+            escena.light2_diffuse[1] = escena.light2_diffuse[0];
             escena.light2_diffuse[2] = escena.light2_diffuse[0];
             escena.light2_diffuse[3] = 1.0f;
             break;
         }
         case LIGHT2_SPECULAR_ID: {
-            escena.light2_specular[1] = escena.light2_specular[0]; 
+            escena.light2_specular[1] = escena.light2_specular[0];
             escena.light2_specular[2] = escena.light2_specular[0];
-            escena.light02specular[3] = 1.0f;
+            escena.light2_specular[3] = 1.0f;
             break;
         }
         case ENABLE_ID: {
@@ -2014,7 +2014,7 @@ void __fastcall TGui::ControlCallback( int control )
 
             break;
         }
-        case SEL_ID: {  
+        case SEL_ID: {
             TPrimitiva* selectedCar = escena.GetCar(escena.seleccion);
 
             selectedCar->colores[0][0] = 0.5f;
@@ -2107,13 +2107,13 @@ void __fastcall TGui::ControlCallback( int control )
             case 2:
                 glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
                 break;
-            
+
             default:
                 break;
             }
         }
         case Z_BUFFER_ID: {
-            
+
             std::cout << "Z-Buffer clickado:  \n";
 
             if ( escena.z_buffer == 0 ) {
@@ -2182,7 +2182,7 @@ void __fastcall TGui::Reshape( int xx, int yy )
             1000.0f
         );
         break;
-    
+
     default:
         break;
     }
@@ -2204,7 +2204,7 @@ void __fastcall TGui::Motion( int x, int y )
 
     deltaX *= escena.sensibility;
     deltaY *= escena.sensibility;
-    
+
     if ( !escena.isShiftPressed && escena.leftButtonPressed ) { // ROTACION
 
         std::cout << "Rotacion!! \n";
@@ -2226,9 +2226,9 @@ void __fastcall TGui::Motion( int x, int y )
             escena.camX = escena.targetX + escena.cameraDistance * cos(glm::radians(escena.pitch)) * sin(glm::radians(escena.yaw));
             escena.camY = escena.targetY + escena.cameraDistance * sin(glm::radians(escena.pitch));
             escena.camZ = escena.targetZ + escena.cameraDistance * cos(glm::radians(escena.pitch)) * cos(glm::radians(escena.yaw));
-        
+
         }
-    
+
     } else if ( escena.isShiftPressed && escena.leftButtonPressed ) { // TRASLACION
 
         std::cout << "Traslacion!! \n";
@@ -2243,7 +2243,7 @@ void __fastcall TGui::Motion( int x, int y )
 
             escena.camX += deltaX * escena.sensibility;
             escena.camY += deltaY * escena.sensibility;
-            
+
             escena.targetX += deltaX * escena.sensibility;
             escena.targetY += deltaY * escena.sensibility;
 
@@ -2280,9 +2280,9 @@ void __fastcall TGui::Mouse(int button, int button_state, int x, int y )
         escena.isCtrlPressed = true;
         std::cout << "PRESSING CONTROL!!\n";
     }
-    
+
     if ( mod & GLUT_ACTIVE_SHIFT ) {
-        escena.isShiftPressed = true; 
+        escena.isShiftPressed = true;
         std::cout << "PRESSING SHIFT!!\n";
     }
 
@@ -2293,13 +2293,13 @@ void __fastcall TGui::Mouse(int button, int button_state, int x, int y )
 
         escena.leftButtonPressed = true;
     }
-    
+
     if (button_state == GLUT_UP && button == GLUT_LEFT_BUTTON) {
         escena.Pick3D(x, y);
         escena.leftButtonPressed = false;
 
     }
-    
+
     // Controlar el click derecho
     if ( button_state == GLUT_DOWN && button == GLUT_RIGHT_BUTTON && cam == 3 ) {
         gui.xIni = x;
@@ -2314,6 +2314,6 @@ void __fastcall TGui::Mouse(int button, int button_state, int x, int y )
 
         escena.rightButtonPressed = false;
     }
-    
+
 }
 
